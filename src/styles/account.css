@@ -1,0 +1,27 @@
+.account {
+    width: fit-content;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    row-gap: .5rem;
+    margin: .5rem;
+    filter: invert(50%);
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+}
+.account:hover {
+    filter: invert(100%);
+}
+.account:active {
+    filter: invert(100%);
+}
+
+.icon-account {
+    width: 24px;
+    height: 24px;
+}
+figcaption {
+    font-size: .875rem;
+    font-weight: 600;
+}

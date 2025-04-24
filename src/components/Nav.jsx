@@ -1,16 +1,22 @@
 import React from 'react';
-import '../styles/nav.css'; // Import your CSS file here
-import Logo from './Logo';
+import { Link } from 'react-router-dom';
+import '../styles/nav.css';
+import Account from './Account';
+import Cart from './Cart';
+
 function Nav() {
   return (
     <nav className="navbar">
-        <div className="identity-ecommerce">
-            <Logo className="logo-trink"/>
-            {/* <span className="catchphrase">{ catchphrase } ... dites-le avec l'accent que vous voulez ;)</span> */}
-            <span className="brand">Trink !</span>
-        </div>
-        <span>Je suis la nav bar</span>
-      
+      <ul className="nav-links">
+        <Link to="/"><li>Accueil</li></Link>
+        <Link to="/products"><li>Boutique</li></Link>
+        <a href="#"><li>Contact</li></a>
+        <a href="#"><li>À propos</li></a>
+      </ul>
+      <div className="account-cart">
+        <Account />
+        <Cart />
+      </div>
     </nav>
   );
 }
