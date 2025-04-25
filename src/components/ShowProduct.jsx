@@ -1,8 +1,9 @@
+import { Link } from 'react-router-dom';
 import "../styles/Show-product.css";
 
 function ShowProduct () {
     return (
-       <a className="show-product">Voir le produit</a>
+        <span className="show-product">Voir le produit</span>
     )
 };
 

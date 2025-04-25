@@ -1,33 +1,7 @@
+import { Link } from 'react-router-dom';
 import { useState, useEffect } from "react";
 import "../styles/product-card.css";
 import ShowProduct from "./ShowProduct.jsx";
-
-const products = [
-    {
-        name: 'Triple Karmeliet',
-        price: 6.00,
-        category: 'Ambrée',
-        isAvailable: true,
-    },
-    {
-        name: 'Leffe Rituel',
-        price: 5.30,
-        category: 'Ambrée',
-        isAvailable: true,
-    },
-    {
-        name: 'Adelscott',
-        price: 4.80,
-        category: 'Ambrée',
-        isAvailable: true,
-    },
-    {
-        name: 'Bière de Noël',
-        price: 7.50,
-        category: 'Blonde',
-        isAvailable: false,
-    }
-]
 
 function ProductCard() {
     const [showProduct, setShowProduct] = useState(null);
@@ -69,11 +43,13 @@ function ProductCard() {
                 <div className="product-cards">
                 {showProduct.products.data.map((product, index) =>
                     (
+                    <Link to={`/products/${product.id}`} key={product.id}>
                         <div className="product-card" key={`${product.name}-${index}`} style={{ filter: product.product_variants[0]?.available ? 'grayscale(0%)' : 'grayscale(80%)', cursor: product.product_variants[0]?.available? 'pointer' : 'not-allowed' }}>
                             <img src={product.image} alt={product.name} />
                             <div className="product-card-description">
-                            {/* {console.log(product.product_variants)} */}
                                 <h3>{product.name}</h3>
+                                {/* <h3>{product.id}</h3>
+                                <h3>{product.slug}</h3> */}
                                 <div>
                                     <span className="category">{product.category} </span>
                                     <span>{product.product_variants[0]?.price_without_tax/100} €</span>
@@ -82,6 +58,8 @@ function ProductCard() {
                             </div>
                             <div className="availability" style={{ backgroundColor: product.product_variants[0]?.available ? '' : 'red', color: 'white' }}>{product.product_variants[0]?.available ? '' : 'On a adoré Trinker avec !'}</div>
                         </div>
+                    </Link>
+
                         )
                     )}
                 </div>
