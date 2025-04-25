@@ -1,9 +1,18 @@
 .product-cards-container {
-  display: flex;
-  justify-content:space-between;
-  flex-wrap: wrap;
-  gap: 20px;
-  padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content:space-between;
+    flex-wrap: wrap;
+    gap: 20px;
+    padding: 20px;
+}
+.product-cards{
+    display: flex;
+    flex-direction: row;
+    justify-content:space-between;
+    flex-wrap: wrap;
+    gap: 20px;
+    padding: 20px;
 }
 .product-card{
     width: 300px;
@@ -16,7 +25,6 @@
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     padding: 20px;
     transition: transform 0.3s ease-in-out;
-    
 
 }
 .product-card:hover {
@@ -62,4 +70,12 @@
     font-weight: 400;
     color: #ffffff;
     rotate: 20deg;
+}
+.pagination{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    gap: 10px;
 }

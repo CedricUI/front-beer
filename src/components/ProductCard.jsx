@@ -1,51 +1,104 @@
+import { useState, useEffect } from "react";
 import "../styles/product-card.css";
 import ShowProduct from "./ShowProduct.jsx";
 
 const products = [
-{
-    name: 'Triple Karmeliet',
-    price: 6.00, 
-    category: 'Ambrée',
-    isAvailable: true,
-},
-{
-    name: 'Leffe Rituel',
-    price: 5.30, 
-    category: 'Ambrée',
-    isAvailable: true,
-},
-{
-    name: 'Adelscott',
-    price: 4.80, 
-    category: 'Ambrée',
-    isAvailable: true,
-},
-{
-    name: 'Bière de Noël',
-    price: 7.50, 
-    category: 'Blonde',
-    isAvailable: false,
-}
+    {
+        name: 'Triple Karmeliet',
+        price: 6.00,
+        category: 'Ambrée',
+        isAvailable: true,
+    },
+    {
+        name: 'Leffe Rituel',
+        price: 5.30,
+        category: 'Ambrée',
+        isAvailable: true,
+    },
+    {
+        name: 'Adelscott',
+        price: 4.80,
+        category: 'Ambrée',
+        isAvailable: true,
+    },
+    {
+        name: 'Bière de Noël',
+        price: 7.50,
+        category: 'Blonde',
+        isAvailable: false,
+    }
 ]
 
-function ProductCard () {
+function ProductCard() {
+    const [showProduct, setShowProduct] = useState(null);
+    const [page, setPage] = useState(1);
+
+    useEffect(() => {
+        fetch('http://127.0.0.1:8000/api/products?page=' + page, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            }
+        })
+            .then(response => response.json())
+            .then(data => {
+                console.log(data);
+                
+                setShowProduct(data);
+            })
+            .catch(error => console.error('Error fetching product data:', error));
+    }, [page]);
+
+    const handlePreviousPage = () => {
+        if (page > 1) {
+            setPage(page - 1);
+        }
+    };
+
+    const handleNextPage = () => {
+        if (showProduct && showProduct.products.next_page_url) {
+            setPage(page + 1);
+        }
+    };
+
     return (
-            <div className="product-cards-container">
-                {products.map((product, index) => 
-                ( 
-                <div className="product-card" key={`${product.name}-${index}`} style={{ filter: product.isAvailable ? 'grayscale(0%)' : 'grayscale(80%)', cursor: product.isAvailable ? 'pointer' : 'not-allowed' }}>
-                        <img src="data:image/jpeg;base64,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" alt={product.name} />
-                        <div className="product-card-description">
-                            <h3>{ product.name }</h3>
-                            <div>
-                                <span className="category">{ product.category } </span>
-                                <span>{ product.price } €</span>
+        <div className="product-cards-container">
+            {showProduct === null ? <div className="loading">Loading...</div> : (
+                <>
+                <div className="product-cards">
+                {showProduct.products.data.map((product, index) =>
+                    (
+                        <div className="product-card" key={`${product.name}-${index}`} style={{ filter: product.product_variants[0]?.available ? 'grayscale(0%)' : 'grayscale(80%)', cursor: product.product_variants[0]?.available? 'pointer' : 'not-allowed' }}>
+                            <img src={product.image} alt={product.name} />
+                            <div className="product-card-description">
+                            {/* {console.log(product.product_variants)} */}
+                                <h3>{product.name}</h3>
+                                <div>
+                                    <span className="category">{product.category} </span>
+                                    <span>{product.product_variants[0]?.price_without_tax/100} €</span>
+                                </div>
+                                <ShowProduct />
                             </div>
-                            <ShowProduct />
+                            <div className="availability" style={{ backgroundColor: product.product_variants[0]?.available ? '' : 'red', color: 'white' }}>{product.product_variants[0]?.available ? '' : 'On a adoré Trinker avec !'}</div>
                         </div>
-                        <div className="availability" style={{ backgroundColor: product.isAvailable ? '' : 'red', color: 'white' }}>{ product.isAvailable ? '' : 'On a adoré Trinker avec !' }</div>
-                </div>))}
-            </div>
+                        )
+                    )}
+                </div>
+                    
+                    <div className="pagination">
+                        <button onClick={handlePreviousPage} disabled={page === 1}>
+                            Précédent
+                        </button>
+                        <span>Page {page}</span>
+                        <button onClick={handleNextPage} disabled={!showProduct.products.next_page_url}>
+                            Suivant
+                        </button>
+                    </div>
+                </>
+            )}
+
+        </div>
     )
 };
 
