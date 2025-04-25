@@ -1,0 +1,25 @@
+.show-product {
+    margin: auto;
+    border-radius: 8px;
+    padding: 0.6em 1.2em;
+    font-size: .8em;
+    font-weight: 500;
+    font-family: inherit;
+    cursor: pointer;
+
+    background-color: #d9a535;
+    text-transform: uppercase;
+    color: #fff;
+    border: 1px solid #d9a535;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    
+  }
+  .show-product:hover {
+    border-color: #d9a535;
+    background-color: #e4bc67;
+  }
+  .show-product:focus,
+  .show-product:focus-visible {
+    outline: 4px auto -webkit-focus-ring-color;
+  }

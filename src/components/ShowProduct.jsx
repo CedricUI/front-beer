@@ -1,8 +1,8 @@
-import "../styles/show-product.css";
+import "../styles/Show-product.css";
 
 function ShowProduct () {
     return (
-        <a className="ShowProduct">Voir le produit</a>
+       <a className="show-product">Voir le produit</a>
     )
 };
 
