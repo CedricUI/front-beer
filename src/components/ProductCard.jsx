@@ -18,7 +18,6 @@ function ProductCard() {
             .then(response => response.json())
             .then(data => {
                 console.log(data);
-                
                 setShowProduct(data);
             })
             .catch(error => console.error('Error fetching product data:', error));
@@ -43,6 +42,8 @@ function ProductCard() {
                 <div className="product-cards">
                 {showProduct.products.data.map((product, index) =>
                     (
+                    // console.log("teste vue : ", product),
+
                     <Link to={`/products/${product.id}`} key={product.id}>
                         <div className="product-card" key={`${product.name}-${index}`} style={{ filter: product.product_variants[0]?.available ? 'grayscale(0%)' : 'grayscale(80%)', cursor: product.product_variants[0]?.available? 'pointer' : 'not-allowed' }}>
                             <img src={product.image} alt={product.name} />
