@@ -21,14 +21,32 @@ function ProductId() {
   if (!productItem) {
     return <div>Loading...</div>;
   }
-  console.log("teste vue : ", productItem.brands);
+  console.log("teste vue : ", productItem);
+  console.log("productVariants volume : ", productItem.product.product_variants[0].volume);
 
   return (
     <div>
-      <h1>Nom du produit:{productItem.product.name} </h1>
+      <img src={productItem.product.image} alt={productItem.product.name} />
+      <h1>{productItem.product.name}</h1>
+
+      {productItem.product.product_variants.map((productItem) => (
+        <div>
+          <span>{productItem.volume} - </span>
+          <span>{productItem.price_without_tax / 100} € </span>
+          <span>{productItem.available ? '' : 'La soif était trop grande !'}</span>
+
+        </div>
+      ) )}
+
+
+      <h2>Description :</h2>
+      <p>{productItem.product.description}</p>
+      
+      
       {productItem.brands.map((productItem) => (
         <div>
-          <h2>Nom du produit:{productItem.name} </h2>
+          <h3>{productItem.name} </h3>
+          <p>{productItem.description}</p>
         </div>
       ) )}
   </div>
