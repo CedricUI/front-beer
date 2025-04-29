@@ -55,7 +55,7 @@ function ProductCard() {
                                     <span className="category">{product.category} </span>
                                     <span>{product.product_variants[0]?.price_without_tax/100} €</span>
                                 </div>
-                                <ShowProduct />
+                                <button>Voir le produit</button>
                             </div>
                             <div className="availability" style={{ backgroundColor: product.product_variants[0]?.available ? '' : 'red', color: 'white' }}>{product.product_variants[0]?.available ? '' : 'On a adoré Trinker avec !'}</div>
                         </div>

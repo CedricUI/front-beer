@@ -4,7 +4,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import './index.css';
 import App from './App.jsx';
 import Products from './components/Products.jsx';
-import ProductId from './components/ProductId.jsx';
+import ShowProduct from './components/ShowProduct.jsx';
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
@@ -12,7 +12,7 @@ createRoot(document.getElementById('root')).render(
       <Routes>
         <Route path="/" element={<App />} />
         <Route path="/products" element={<Products />} />
-        <Route path="/products/:id" element={<ProductId />} />
+        <Route path="/products/:id" element={<ShowProduct />} />
       </Routes>
     </BrowserRouter>
   </StrictMode>,

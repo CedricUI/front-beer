@@ -1,9 +1,14 @@
-import { Link } from 'react-router-dom';
+
 import "../styles/Show-product.css";
+import ProductId from './ProductId';
+import Header from './header';
 
 function ShowProduct () {
     return (
-        <span className="show-product">Voir le produit</span>
+        <>
+            <Header />
+            <ProductId />
+        </>
     )
 };
 
