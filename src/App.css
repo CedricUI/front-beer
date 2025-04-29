@@ -1,11 +1,16 @@
 #root {
+  max-width: 1920px;
   width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  max-width: 1280px;
+  margin: 0;
   margin: 0 auto;
-  padding: 2rem;
+  padding: 0;
   text-align: center;
+  overflow: hidden;
+}
+.App {
+  margin: 0 auto;
+  padding: 0;
 }
