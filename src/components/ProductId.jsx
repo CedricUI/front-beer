@@ -1,6 +1,6 @@
 import { useParams } from 'react-router-dom';
 import { useState, useEffect } from 'react';
-// import '../styles/productItemId';
+import '../styles/ProductId.css'; // Assurez-vous que le chemin est correct
 
 function ProductId() {
   const { id } = useParams(); // Récupère l'ID du produit depuis l'URL
@@ -38,37 +38,81 @@ function ProductId() {
   };
 
   return (
-    <div>
-      <img src={productItem.product.image} alt={productItem.product.name} />
-      <h1>{productItem.product.name} <span>Une bière d'une force à {productItem.product.alcohol_degree} % d'Alc</span></h1>
+    <div className="product-item-container">
+      <div className="product-item">
+        <div className='product-item-image'>
+          < img src={productItem.product.image} alt={productItem.product.name} className='image'/>
+          <div className='product-item-image-description'>
+            {productItem.product.product_variants.map((productVariant) => (
+                <div key={productVariant.id} className='product-variant-description'>
+                
+                  <div id={productVariant.id} style={{ display: 'block' }} className='product-variant-description'>
+                    <span>{productVariant.price_without_tax / 100} € </span>
+                    <span>
+                      {productVariant.available 
+                        ? `Stock ${productVariant.stock_quantity}` 
+                        : 'La soif était trop grande !'}
+                    </span>
+                  </div>
+                      
+                </div>
+              ))}
 
-      {productItem.product.product_variants.map((productVariant) => (
-        <div key={productVariant.id}>
-
-          <div id={productVariant.id} style={{ display: 'block' }}>
-            <span>{productVariant.price_without_tax / 100} € - </span>
-            <span>
-              {productVariant.available 
-                ? `Stock ${productVariant.stock_quantity}` 
-                : 'La soif était trop grande !'}
-            </span>
           </div>
+          
 
-          <button onClick={() => handleVariantClick(productVariant)}>
-            {productVariant.volume}
-          </button>
         </div>
-      ))}
 
-      <h2>Description :</h2>
-      <p>{productItem.product.description}</p>
+
+
+
+
+
+
+        <div >
+          <div className='product-variant-scroll'>
+            {productItem.product.product_variants.map((productVariant) => (
+              <div key={productVariant.id} className='product-variant'>
+              
+                {/* <div id={productVariant.id} style={{ display: 'block' }}>
+                  <span>{productVariant.price_without_tax / 100} € - </span>
+                  <span>
+                    {productVariant.available 
+                      ? `Stock ${productVariant.stock_quantity}` 
+                      : 'La soif était trop grande !'}
+                  </span>
+                </div> */}
+                    
+                <div>
+                    <button onClick={() => handleVariantClick(productVariant)}>
+                    {productVariant.volume}
+                    </button>
+                </div>
+                
+              </div>
+            ))}
+
+          </div>
+          
+        </div>
+        
+      </div>
+      <section className="product-details">
+        <h1>{productItem.product.name} <span>Une bière d'une force à {productItem.product.alcohol_degree} % d'Alc</span></h1>
+
+        
+
+        <h2>Description :</h2>
+        <p>{productItem.product.description}</p>
+
+        {productItem.brands.map((brand) => (
+          <div key={brand.id}>
+            <h3> <img src={brand.logo} alt={brand.name} /> {brand.name} </h3>
+            <p>{brand.description}</p>
+          </div>
+        ))}
+      </section>
       
-      {productItem.brands.map((brand) => (
-        <div key={brand.id}>
-          <h3> <img src={brand.logo} alt={brand.name} /> {brand.name} </h3>
-          <p>{brand.description}</p>
-        </div>
-      ))}
     </div>
   );
   };
