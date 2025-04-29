@@ -26,13 +26,16 @@ function ProductId() {
   const handleVariantClick = (productVariant) => {
     for (let i = 0; i < productItem.product.product_variants.length; i++) {
       const variantId = productItem.product.product_variants[i].id;
+      const brut = document.getElementsByClassName('brut')[0];
       console.log("le variantId : ", variantId);
 
       if (productVariant.id === variantId) {
         console.log("le product Variant : ", productVariant.id);
-        document.getElementById(productVariant.id).style.display = 'block';
+        document.getElementById(productVariant.id).style.display = 'flex';
+        brut.style.display = 'none';
       } else {
         document.getElementById(productItem.product.product_variants[i].id).style.display = 'none';
+
       }
     }
   };
@@ -43,17 +46,35 @@ function ProductId() {
         <div className='product-item-image'>
           < img src={productItem.product.image} alt={productItem.product.name} className='image'/>
           <div className='product-item-image-description'>
+
+          <div className='product-variant-description brut'>
+                <span style={{ textDecorationLine: productItem.product.product_variants[0].available?'' 
+                  : 'line-through', color: productItem.product.product_variants[0].available?'' 
+                  :'grey' }}>{productItem.product.product_variants[0].price_without_tax / 100} € </span>
+                <span style={{ color: productItem.product.product_variants[0].available?'' 
+                  :'red' }}>
+                  {productItem.product.product_variants[0].available 
+                    ? `Stock ${productItem.product.product_variants[0].stock_quantity}` 
+                    : 'La soif était trop grande !'}
+                </span>
+          </div>
+
+
+
+
             {productItem.product.product_variants.map((productVariant) => (
-                <div key={productVariant.id} className='product-variant-description'>
+                <div key={productVariant.id} id={productVariant.id} className='product-variant-description'>
                 
-                  <div id={productVariant.id} style={{ display: 'block' }} className='product-variant-description'>
-                    <span>{productVariant.price_without_tax / 100} € </span>
-                    <span>
+                    <span style={{ textDecorationLine: productVariant.available?'' 
+                      : 'line-through', color: productVariant.available?'' 
+                      :'grey' }}>{productVariant.price_without_tax / 100} € </span>
+                    <span style={{ color: productVariant.available?'' 
+                      :'red' }}>
                       {productVariant.available 
                         ? `Stock ${productVariant.stock_quantity}` 
                         : 'La soif était trop grande !'}
                     </span>
-                  </div>
+
                       
                 </div>
               ))}
