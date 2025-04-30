@@ -6,7 +6,7 @@ function ProductId() {
   const { id } = useParams(); // Récupère l'ID du produit depuis l'URL
   const [productItem, setProductItem] = useState(null);
   const [selectedProductVariant, setProductVariant] = useState(null); // État pour stocker le produit variant sélectionné
-
+  const [productVariantInputNumber, setProductVariantInputNumber] = useState(null); // État pour stocker le produit variant sélectionné
   useEffect(() => {
     fetch(`http://127.0.0.1:8000/api/products/${id}`)
       .then((response) => response.json())
@@ -50,11 +50,28 @@ function ProductId() {
   console.log("le selectedProductVariant : ", selectedProductVariant);
 
   const handleAddToCart = (selectedProductVariant, productItem) => {
+    // Vérifiez si le produitVariant est disponible avant d'ajouter au panier
+    if (selectedProductVariant === null || selectedProductVariant === undefined) {
+      selectedProductVariant = productItem.product.product_variants[0];
+      console.log("le selectedProductVariant null : ", selectedProductVariant);
+      setProductVariant(selectedProductVariant);
+    }
     if (!selectedProductVariant.available) {
-      alert("Ce produit n'est pas disponible !");
+      alert("Trop lent, ce produit n'est plus disponible ! 😬");
       return;
     }
-    // Vérifiez si le produitVariant est disponible avant d'ajouter au panier
+
+    const inputNumber = document.getElementById("stock_quantity");
+    const inputValue = parseInt(inputNumber.value, 10);
+    console.log("inputValue : ", inputValue);
+    if(inputValue == 0){
+      alert("Pourquoi tu commandes rien ! 🤔");
+      return;
+    }
+    if (inputValue > selectedProductVariant.stock_quantity) {
+      alert("Holla ! Doucement, on ne pourra pas te fournir autant de marchandise ! ✋😑");
+      return;
+    }
     
     const url = `https://api.trinkr.fr/api/v1/cart/add/${productItem.product.id}/${selectedProductVariant.id}`;
     const token = localStorage.getItem('token');
@@ -63,18 +80,19 @@ function ProductId() {
       'Authorization': `Bearer ${token}`,
     };
     const data = {
+      product_stock_quantity: inputValue,
+      //*************  À remplasser par les bonnes valeurs *************/
       product_variant_id: selectedProductVariant.id,
       product_id: productItem.product.id,
       product_name: productItem.product.name,
       product_image: productItem.product.image,
       product_price: selectedProductVariant.price_without_tax / 100,
       product_volume: selectedProductVariant.volume,
+      product_alcohol_degree: productItem.product.alcohol_degree,
+      product_description: productItem.product.description,
       product_brand: productItem.brands[0].name,
       product_brand_logo: productItem.brands[0].logo,
       product_brand_description: productItem.brands[0].description,
-      product_alcohol_degree: productItem.product.alcohol_degree,
-      product_description: productItem.product.description,
-      product_stock_quantity: selectedProductVariant.stock_quantity,
       product_available: selectedProductVariant.available,
       product_variant_available: selectedProductVariant.available,
       product_variant_stock_quantity: selectedProductVariant.stock_quantity,
@@ -92,11 +110,11 @@ function ProductId() {
       })
       .then((data) => {
         console.log('Success:', data);
-        alert("Produit ajouté au panier !");
+        alert("C'est un franc succé ! 👌 Le produit ajouté au panier !");
       })
       .catch((error) => {
         console.error('Error:', error);
-        alert("Erreur lors de l'ajout au panier !");
+        alert("Erreur lors de l'ajout au panier ! Ne me regarde pas ! 😬 Je ne sais pas ce qui s'est passé ! Prend un verre en attendant ! 🥃");
       });
   }
 
@@ -126,7 +144,7 @@ function ProductId() {
                     :'red' }}>
                     {productItem.product.product_variants[0].available 
                       ? `Stock ${productItem.product.product_variants[0].stock_quantity}` 
-                      : 'La soif était trop grande !'}
+                      : 'La soif était trop grande! 😅'}
                   </span>
             </div>
             {productItem.product.product_variants.map((productVariant) => (
@@ -138,7 +156,7 @@ function ProductId() {
                       :'red' }}>
                       {productVariant.available 
                         ? `Stock ${productVariant.stock_quantity}` 
-                        : 'La soif était trop grande!'}
+                        : 'La soif était trop grande! 😅'}
                     </span>
                 </div>
               ))}
@@ -151,13 +169,17 @@ function ProductId() {
                     <h3> <img src={brand.logo} alt={brand.name} /> {brand.name} </h3>
                     <p>{brand.description}</p>
                   </div>
+                  
                 ))}
 
                 <div className="product-actions">
+                <input type="number" name="stock_quantity" min={0} 
+                max={selectedProductVariant?.stock_quantity ?? productItem.product.product_variants[0].stock_quantity} 
+                defaultValue={0} id="stock_quantity"/>
+                
                   <button onClick={() => handleAddToCart(selectedProductVariant, productItem)}>Ajouter au panier</button>
                   <button onClick={() => window.history.back()}>Retour</button>
                 </div>
-                
 
               </section>
           </div>

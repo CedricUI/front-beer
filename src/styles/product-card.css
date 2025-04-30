@@ -59,7 +59,6 @@
     text-transform: capitalize;
 }
 .availability {
-    width: 50%;
     position: absolute;
     top: 120px;
     left: 80px;
