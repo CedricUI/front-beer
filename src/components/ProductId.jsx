@@ -5,6 +5,7 @@ import '../styles/ProductId.css'; // Assurez-vous que le chemin est correct
 function ProductId() {
   const { id } = useParams(); // Récupère l'ID du produit depuis l'URL
   const [productItem, setProductItem] = useState(null);
+  const [selectedProductVariant, setProductVariant] = useState(null); // État pour stocker le produit variant sélectionné
 
   useEffect(() => {
     fetch(`http://127.0.0.1:8000/api/products/${id}`)
@@ -23,20 +24,68 @@ function ProductId() {
 
 
   const handleVariantClick = (productVariant) => {
+
     for (let i = 0; i < productItem.product.product_variants.length; i++) {
       const variantId = productItem.product.product_variants[i].id;
       const brut = document.getElementsByClassName('brut')[0];
       console.log("le variantId : ", variantId);
 
-      if (productVariant.id === variantId) {
+      if (productVariant.id !== variantId) {
+        document.getElementById(variantId).style.display = 'none';
+        
+      } else {
         console.log("le product Variant : ", productVariant.id);
         document.getElementById(productVariant.id).style.display = 'flex';
         brut.style.display = 'none';
-      } else {
-        document.getElementById(productItem.product.product_variants[i].id).style.display = 'none';
       }
     }
+        setProductVariant(productVariant); // Met à jour l'état avec le produit variant sélectionn
+
+        return productVariant;
+
   };
+
+  
+
+  console.log("le selectedProductVariant : ", selectedProductVariant);
+
+  const handleAddToCart = (selectedProductVariant) => {
+    if (!selectedProductVariant.available) {
+      alert("Ce produit n'est pas disponible !");
+      return;
+    }
+    // Vérifiez si le produitVariant est disponible avant d'ajouter au panier
+    
+    const url = `https://api.trinkr.fr/api/v1/cart/add/${productItem.product.id}/${selectedProductVariant.id}`;
+    const token = localStorage.getItem('token');
+    const headers = {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`,
+    };
+    const data = {
+      quantity: 1,
+      product_variant_id: selectedProductVariant.id,
+    };
+    fetch(url, {
+      method: 'POST',
+      headers: headers,
+      body: JSON.stringify(data),
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok ' + response.statusText);
+        }
+        return response.json();
+      })
+      .then((data) => {
+        console.log('Success:', data);
+        alert("Produit ajouté au panier !");
+      })
+      .catch((error) => {
+        console.error('Error:', error);
+        alert("Erreur lors de l'ajout au panier !");
+      });
+  }
 
   return (
     <div className="product-item-container">
@@ -90,6 +139,9 @@ function ProductId() {
                     <p>{brand.description}</p>
                   </div>
                 ))} 
+                <button onClick={() => handleAddToCart(selectedProductVariant)}>Ajouter au panier</button>
+                <button onClick={() => window.history.back()}>Retour</button>
+
               </section>
           </div>
         </div>

@@ -1,7 +1,6 @@
 import { Link } from 'react-router-dom';
 import { useState, useEffect } from "react";
 import "../styles/product-card.css";
-import ShowProduct from "./ShowProduct.jsx";
 
 function ProductCard() {
     const [showProduct, setShowProduct] = useState(null);
