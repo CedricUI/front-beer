@@ -49,7 +49,7 @@ function ProductId() {
 
   console.log("le selectedProductVariant : ", selectedProductVariant);
 
-  const handleAddToCart = (selectedProductVariant) => {
+  const handleAddToCart = (selectedProductVariant, productItem) => {
     if (!selectedProductVariant.available) {
       alert("Ce produit n'est pas disponible !");
       return;
@@ -63,8 +63,21 @@ function ProductId() {
       'Authorization': `Bearer ${token}`,
     };
     const data = {
-      quantity: 1,
       product_variant_id: selectedProductVariant.id,
+      product_id: productItem.product.id,
+      product_name: productItem.product.name,
+      product_image: productItem.product.image,
+      product_price: selectedProductVariant.price_without_tax / 100,
+      product_volume: selectedProductVariant.volume,
+      product_brand: productItem.brands[0].name,
+      product_brand_logo: productItem.brands[0].logo,
+      product_brand_description: productItem.brands[0].description,
+      product_alcohol_degree: productItem.product.alcohol_degree,
+      product_description: productItem.product.description,
+      product_stock_quantity: selectedProductVariant.stock_quantity,
+      product_available: selectedProductVariant.available,
+      product_variant_available: selectedProductVariant.available,
+      product_variant_stock_quantity: selectedProductVariant.stock_quantity,
     };
     fetch(url, {
       method: 'POST',
@@ -138,9 +151,13 @@ function ProductId() {
                     <h3> <img src={brand.logo} alt={brand.name} /> {brand.name} </h3>
                     <p>{brand.description}</p>
                   </div>
-                ))} 
-                <button onClick={() => handleAddToCart(selectedProductVariant)}>Ajouter au panier</button>
-                <button onClick={() => window.history.back()}>Retour</button>
+                ))}
+
+                <div className="product-actions">
+                  <button onClick={() => handleAddToCart(selectedProductVariant, productItem)}>Ajouter au panier</button>
+                  <button onClick={() => window.history.back()}>Retour</button>
+                </div>
+                
 
               </section>
           </div>
