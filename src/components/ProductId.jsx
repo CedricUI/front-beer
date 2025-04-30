@@ -57,7 +57,7 @@ function ProductId() {
       setProductVariant(selectedProductVariant);
     }
     if (!selectedProductVariant.available) {
-      alert("Trop lent, ce produit n'est plus disponible ! 😬");
+      alert("Trop lent, ce produit n'est plus disponible ! 😬 Pour le moment... en cours de fabrication... 🏭");
       return;
     }
 
