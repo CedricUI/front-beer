@@ -6,6 +6,7 @@ import App from './App.jsx';
 import Products from './components/Products.jsx';
 import ShowProduct from './components/ShowProduct.jsx';
 import ShowCart from './components/ShowCart.jsx';
+import LogIn from './components/auth/LogIn.jsx';
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
@@ -15,6 +16,7 @@ createRoot(document.getElementById('root')).render(
         <Route path="/products" element={<Products />} />
         <Route path="/products/:id" element={<ShowProduct />} />
         <Route path="/panier" element={<ShowCart />} />
+        <Route path="/connexion" element={<LogIn />} />
       </Routes>
     </BrowserRouter>
   </StrictMode>,
