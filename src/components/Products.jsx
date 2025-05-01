@@ -8,7 +8,7 @@ function Products() {
         <Header/>
         <div className="products">
           <h1>Products</h1>
-          <p>Here are some of our products.</p>
+          <p>Voici quelques uns de nos produits.</p>
           <ProductCard /> 
         </div>
     </div>
