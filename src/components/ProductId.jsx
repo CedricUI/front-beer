@@ -69,7 +69,7 @@ function ProductId() {
       return;
     }
     if (inputValue > selectedProductVariant.stock_quantity) {
-      alert("Holla ! Doucement, on ne pourra pas te fournir autant de marchandise ! ✋😑");
+      alert("Ola ! Doucement, on ne pourra pas te fournir autant de marchandise ! ✋😑");
       return;
     }
     
