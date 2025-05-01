@@ -120,6 +120,8 @@ input[type=number]::-webkit-inner-spin-button {
     gap: 7px;
 }
 .btn-total button{
-    border-width: 0;
-    background-color: rgb(46, 46, 46);
+    color: black;
+    /* border-width: 0; */
+    border-color: rgb(186, 186, 186);
+    background-color: rgb(255, 255, 255);
 }

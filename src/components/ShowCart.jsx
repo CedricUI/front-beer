@@ -1,6 +1,7 @@
 import React from 'react';
 import '../styles/show-cart.css'; // Assurez-vous que le chemin d'importation est correct
 import Header from './header';
+import iconCart from "../assets/icon-cart.webp";
 
 function ShowCart({ cart }) {    
     const quantity = 1; // Remplacez ceci par la quantité réelle de l'article dans le panier
@@ -10,16 +11,15 @@ function ShowCart({ cart }) {
     const price2 = 15;
 
 
-    const handleRemove = (itemId) => {
-        // Logique pour supprimer l'élément du panier
-    };
-    const handleUpdateQuantity = (itemId, newQuantity) => {
-        // Logique pour mettre à jour la quantité de l'élément dans le panier
-    };
-    const handleUpdate = (itemId, newQuantity) => {
-        // Logique pour mettre à jour la quantité de l'élément dans le panier
-    };
-
+    // const handleRemove = (itemId) => {
+    //     // Logique pour supprimer l'élément du panier
+    // };
+    // const handleUpdateQuantity = (itemId, newQuantity) => {
+    //     // Logique pour mettre à jour la quantité de l'élément dans le panier
+    // };
+    // const handleUpdate = (itemId, newQuantity) => {
+    //     // Logique pour mettre à jour la quantité de l'élément dans le panier
+    // };
     // const handleClearCart = () => {
     //     // Logique pour vider le panier
     // };
@@ -102,8 +102,8 @@ function ShowCart({ cart }) {
                       <button>Commander</button>
                     </div>
                     <div className='btn-total'>
-                      <button>Vider le panier</button>
                       <button>Continuer les achats</button>
+                      <button>Vider le panier</button>
                       <button>Retour</button>  
                     </div>
                 </div>
