@@ -39,7 +39,6 @@ function LogIn (){
           console.log('data :', data);
 
           login(data.token);
-          console.log("Token: ", data.token);
 
         } catch (error) {
           console.error('Erreur lors de la connexion :', error.message);
