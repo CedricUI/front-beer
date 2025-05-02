@@ -18,6 +18,7 @@ createRoot(document.getElementById('root')).render(
           <Route path="/products" element={<Products />} />
           <Route path="/products/:id" element={<ShowProduct />} />
           <Route path="/panier" element={<ProtectedRoute component={ShowCart} />} />
+          {/* <Route path="/panier" element={<ShowCart />} /> */}
           <Route path="/connexion" element={<LogIn />} />
         </Routes>
       </AuthProvider>

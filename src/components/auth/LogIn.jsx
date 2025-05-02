@@ -13,30 +13,6 @@ function LogIn (){
 
     console.log('avant fetch');
 
-    // const handleSubmit = async (event) => {
-    //   event.preventDefault();
-    //   const response = await fetch('http://127.0.0.1:8000/api/login', {
-    //     method: 'POST',
-    //     headers: {
-    //       'Content-Type': 'application/json',
-    //     },
-    //     body: JSON.stringify({ email, password }),
-    //   });
-
-    //   console.log('après fetch');
-    //   console.log('response :', response)
-
-    //   const data = await response.json();
-    //   console.log('data :', data)
-
-
-      
-
-    //   login(data.token); // Remplacez ceci par votre logique d'authentification réelle
-    //   console.log("Token: ", data.token); // Affiche le token dans la console {password}
-    // };
-
-
     const handleSubmit = async (event) => {
         event.preventDefault();
         try {
@@ -56,19 +32,17 @@ function LogIn (){
 
           console.log('reponse :', response);
       
-          const text = await response.text();
-          if (!text) {
-            throw new Error('Réponse vide du serveur');
-          }
-      
-          const data = JSON.parse(text);
+          const data = await response.json();
+          if (!data.token) {
+            throw new Error("Pas de token reçu !");
+          }          
           console.log('data :', data);
 
           login(data.token);
           console.log("Token: ", data.token);
+
         } catch (error) {
           console.error('Erreur lors de la connexion :', error.message);
-          // Tu peux afficher une alerte ou message d’erreur ici si tu veux
         }
       };
       
