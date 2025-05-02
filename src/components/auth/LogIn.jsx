@@ -3,6 +3,7 @@ import '../../styles/auth/log-in.css';
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../../context/AuthContext'; // Assurez-vous que le chemin est correct
 import { useNavigate } from 'react-router-dom';
+import Cookies from 'js-cookie'; // Ajout de l'importation
 
 
 function LogIn (){
@@ -37,6 +38,10 @@ function LogIn (){
             throw new Error("Pas de token reçu !");
           }          
           console.log('data :', data);
+
+            // Stocker le token dans les cookies
+          Cookies.set('authToken', data.token, { expires: 7 }); // Expire dans 7 jours
+          console.log('Token stocké dans les cookies :', data.token)
 
           login(data.token);
 
