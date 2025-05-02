@@ -7,17 +7,29 @@ import Products from './components/Products.jsx';
 import ShowProduct from './components/ShowProduct.jsx';
 import ShowCart from './components/ShowCart.jsx';
 import LogIn from './components/auth/LogIn.jsx';
+import { AuthProvider } from './context/AuthContext.jsx';
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<App />} />
-        <Route path="/products" element={<Products />} />
-        <Route path="/products/:id" element={<ShowProduct />} />
-        <Route path="/panier" element={<ShowCart />} />
-        <Route path="/connexion" element={<LogIn />} />
-      </Routes>
+      <AuthProvider>
+        <Routes>
+          <Route path="/" element={<App />} />
+          <Route path="/products" element={<Products />} />
+          <Route path="/products/:id" element={<ShowProduct />} />
+          <Route path="/panier" element={<ProtectedRoute component={ShowCart} />} />
+          <Route path="/connexion" element={<LogIn />} />
+        </Routes>
+      </AuthProvider>
     </BrowserRouter>
   </StrictMode>,
 );
+function ProtectedRoute({ component: Component }) {
+  const { authToken } = useAuth();
+
+  useEffect(() => {
+    console.log("Auth token has changed, current token:", authToken);
+  }, [authToken]);
+
+  return authToken ? <Component /> : <Navigate to="/connexion" replace />;
+};

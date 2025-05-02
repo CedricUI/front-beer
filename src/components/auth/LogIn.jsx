@@ -1,13 +1,92 @@
-import '../../styles/auth/log-in.css'
-function LogIn (){
-    return(
+import auth from 'maildev/lib/auth';
+import '../../styles/auth/log-in.css';
+import React, { useState, useEffect } from 'react';
+import { useAuth } from '../../context/AuthContext'; // Assurez-vous que le chemin est correct
+import { useNavigate } from 'react-router-dom';
 
+
+function LogIn (){
+    const [email, setemail] = useState('');
+    const [password, setPassword] = useState('');
+    const { authToken, login } = useAuth();
+    const navigate = useNavigate();
+
+    console.log('avant fetch');
+
+    // const handleSubmit = async (event) => {
+    //   event.preventDefault();
+    //   const response = await fetch('http://127.0.0.1:8000/api/login', {
+    //     method: 'POST',
+    //     headers: {
+    //       'Content-Type': 'application/json',
+    //     },
+    //     body: JSON.stringify({ email, password }),
+    //   });
+
+    //   console.log('après fetch');
+    //   console.log('response :', response)
+
+    //   const data = await response.json();
+    //   console.log('data :', data)
+
+
+      
+
+    //   login(data.token); // Remplacez ceci par votre logique d'authentification réelle
+    //   console.log("Token: ", data.token); // Affiche le token dans la console {password}
+    // };
+
+
+    const handleSubmit = async (event) => {
+        event.preventDefault();
+        try {
+          const response = await fetch('http://127.0.0.1:8000/api/authenticate', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ email, password }),
+          });
+      
+          if (!response.ok) {
+            // Affiche un message d'erreur plus clair si les identifiants sont invalides
+            const errorText = await response.text();
+            throw new Error(`Erreur ${response.status}: ${errorText || 'Réponse invalide'}`);
+          }
+
+          console.log('reponse :', response);
+      
+          const text = await response.text();
+          if (!text) {
+            throw new Error('Réponse vide du serveur');
+          }
+      
+          const data = JSON.parse(text);
+          console.log('data :', data);
+
+          login(data.token);
+          console.log("Token: ", data.token);
+        } catch (error) {
+          console.error('Erreur lors de la connexion :', error.message);
+          // Tu peux afficher une alerte ou message d’erreur ici si tu veux
+        }
+      };
+      
+
+    // Effect pour écouter les changements sur authToken
+    useEffect(() => {
+      if (authToken) {
+        navigate('/');
+      }
+    }, [authToken, navigate]);
+
+    return(
         <>
           {/* From Uiverse.io by Yaya12085 */}
-          <form className="form">
-            <h1 className="form-title">Connectez vous à votre compte</h1>
+          <form onSubmit={handleSubmit} method='POST' className="form">
+            <h1 className="form-title">Connectez vous à votre compte password</h1>
             <div className="input-container">
-              <input placeholder="Entrer votre email" type="email" />
+              <input placeholder="Entrer votre email" type="text" name='email' value={email} onChange={(e) => setemail(e.target.value)}/>
               <span>
                 <svg
                   stroke="currentColor"
@@ -25,7 +104,7 @@ function LogIn (){
               </span>
             </div>
             <div className="input-container">
-              <input placeholder="Entrer votre mot de passe" type="password" />
+              <input placeholder="Entrer votre mot de passe" type="password" name='password' value={password} onChange={(e) => setPassword(e.target.value)} />
               <span>
                 <svg
                   stroke="currentColor"
