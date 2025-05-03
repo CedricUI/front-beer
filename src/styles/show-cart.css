@@ -35,7 +35,7 @@ ul{
     border: 1px solid rgb(234, 234, 234);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
-.image{
+.container-img .image{
     width: 100px;
     object-fit: cover;
 }
@@ -77,14 +77,14 @@ ul{
 .btn-description button:hover{
     background-color: rgb(255, 255, 255);
 }
-input[type=number] {
+.btn-quantity input[type=number] {
     width: 20px;
     padding: auto;
     text-align: center;
     border-width:0px 1px ;
     border-radius: 0;
 }
-input[type=number]::-webkit-inner-spin-button {
+.btn-quantity input[type=number]::-webkit-inner-spin-button {
     -webkit-appearance: none;
 }
 .display-price{

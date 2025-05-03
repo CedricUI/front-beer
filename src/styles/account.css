@@ -25,3 +25,17 @@ figcaption {
     font-size: .875rem;
     font-weight: 600;
 }
+.btn-logout{
+    background-color: transparent;
+    border-style: none;
+    box-shadow: none;
+}
+.btn-logout:hover{
+    background-color: transparent;
+}
+.btn-logout:focus{
+    outline: none;
+}
+.btn-logout svg:hover{
+    fill:#000000;
+}
