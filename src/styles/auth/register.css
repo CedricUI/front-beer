@@ -1,0 +1,22 @@
+.register-form{
+    max-width: 300px;
+    width: 60%;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+.register-form input{
+    border-color: rgb(237, 237, 237);
+    border-style: solid;
+    padding: 10px;
+    border-radius: 8px;
+}
+h1 span{
+    font-size: small;
+    font-weight: 600;
+    color: grey;
+}

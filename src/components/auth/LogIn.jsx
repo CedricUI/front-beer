@@ -1,7 +1,7 @@
 import '../../styles/auth/log-in.css';
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../../context/AuthContext'; // Assurez-vous que le chemin est correct
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Header from '../header';
 
 function LogIn() {
@@ -81,9 +81,12 @@ function LogIn() {
             <button className="submit" type="submit">
               Se connecter
             </button>
-            <span className="signup-link">
-              Pas encore de compte ? 😲 <a href="">S'inscrire</a>
-            </span>
+            <Link to="/inscription">
+              <span className="signup-link">
+                Pas encore de compte ? 😲 <a href="">S'inscrire</a>
+              </span>
+            </Link>
+            
           </form>
         </>
 
