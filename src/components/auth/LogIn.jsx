@@ -1,70 +1,43 @@
-import auth from 'maildev/lib/auth';
 import '../../styles/auth/log-in.css';
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../../context/AuthContext'; // Assurez-vous que le chemin est correct
 import { useNavigate } from 'react-router-dom';
-import Cookies from 'js-cookie'; // Ajout de l'importation
+import Header from '../header';
 
+function LogIn() {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const { authToken, login } = useAuth(); // Récupération de login depuis le contexte
+  const navigate = useNavigate();
 
-function LogIn (){
-    const [email, setemail] = useState('');
-    const [password, setPassword] = useState('');
-    const { authToken, login } = useAuth();
-    const navigate = useNavigate();
+  const handleSubmit = async (event) => {
+      event.preventDefault();
+      try {
+          // Appel de la méthode login depuis le contexte
+          await login(email, password);
 
-    console.log('avant fetch');
-
-    const handleSubmit = async (event) => {
-        event.preventDefault();
-        try {
-          const response = await fetch('http://127.0.0.1:8000/api/authenticate', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ email, password }),
-          });
-      
-          if (!response.ok) {
-            // Affiche un message d'erreur plus clair si les identifiants sont invalides
-            const errorText = await response.text();
-            throw new Error(`Erreur ${response.status}: ${errorText || 'Réponse invalide'}`);
-          }
-
-          console.log('reponse :', response);
-      
-          const data = await response.json();
-          if (!data.token) {
-            throw new Error("Pas de token reçu !");
-          }          
-          console.log('data :', data);
-
-            // Stocker le token dans les cookies
-          Cookies.set('authToken', data.token, { expires: 7 }); // Expire dans 7 jours
-          console.log('Token stocké dans les cookies :', data.token)
-
-          login(data.token);
-
-        } catch (error) {
+          // Redirection après connexion réussie
+            navigate(-1);
+      } catch (error) {
           console.error('Erreur lors de la connexion :', error.message);
-        }
-      };
-      
-
-    // Effect pour écouter les changements sur authToken
-    useEffect(() => {
-      if (authToken) {
-        navigate('/');
       }
-    }, [authToken, navigate]);
+  };
+
+  // Redirection si l'utilisateur est déjà connecté
+  useEffect(() => {
+      if (authToken) {
+          navigate(-1);
+      }
+  }, [authToken, navigate]);
 
     return(
         <>
+          <Header/>
           {/* From Uiverse.io by Yaya12085 */}
           <form onSubmit={handleSubmit} method='POST' className="form">
             <h1 className="form-title">Connectez vous à votre compte password</h1>
             <div className="input-container">
-              <input placeholder="Entrer votre email" type="text" name='email' value={email} onChange={(e) => setemail(e.target.value)}/>
+              <input placeholder="Entrer votre email" type="text" name='email' onChange={(e) => setEmail(e.target.value)}/>
               <span>
                 <svg
                   stroke="currentColor"
@@ -82,7 +55,7 @@ function LogIn (){
               </span>
             </div>
             <div className="input-container">
-              <input placeholder="Entrer votre mot de passe" type="password" name='password' value={password} onChange={(e) => setPassword(e.target.value)} />
+              <input placeholder="Entrer votre mot de passe" type="password" name='password' onChange={(e) => setPassword(e.target.value)} />
               <span>
                 <svg
                   stroke="currentColor"
