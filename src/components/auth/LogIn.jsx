@@ -35,7 +35,7 @@ function LogIn() {
           <Header/>
           {/* From Uiverse.io by Yaya12085 */}
           <form onSubmit={handleSubmit} method='POST' className="form">
-            <h1 className="form-title">Connectez vous à votre compte password</h1>
+            <h1 className="form-title">Connectez vous à votre compte</h1>
             <div className="input-container">
               <input placeholder="Entrer votre email" type="text" name='email' onChange={(e) => setEmail(e.target.value)}/>
               <span>
@@ -81,11 +81,12 @@ function LogIn() {
             <button className="submit" type="submit">
               Se connecter
             </button>
-            <Link to="/inscription">
               <span className="signup-link">
-                Pas encore de compte ? 😲 <a href="">S'inscrire</a>
+                Pas encore de compte ? 😲 
+                <Link to="/inscription">
+                  <span>S'inscrire</span>
+                </Link>
               </span>
-            </Link>
             
           </form>
         </>
