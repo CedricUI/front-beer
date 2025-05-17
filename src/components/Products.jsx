@@ -3,6 +3,7 @@ import ProductCard from "./ProductCard";
 import '../styles/products.css';
 import PopUp from './PopUp';
 import { useEffect, useState } from "react";
+import Footer from "./Footer";
 
 function Products() {
   const [showPopup, setShowPopup] = useState(false);
@@ -40,6 +41,7 @@ function Products() {
           <h1>Products</h1>
           <p>Voici quelques uns de nos produits.</p>
           <ProductCard /> 
+          <Footer />
         </div>
     </div>
     </>

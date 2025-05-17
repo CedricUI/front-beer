@@ -4,6 +4,7 @@ import "../styles/Show-product.css";
 import PopUp from "./PopUp";
 import ProductId from './ProductId';
 import Header from './header';
+import Footer from "./Footer";
 
 function ShowProduct () {
     const [showPopup, setShowPopup] = useState(false);
@@ -37,6 +38,7 @@ function ShowProduct () {
             )}
             <Header />
             <ProductId />
+            <Footer />
         </>
     )
 };
