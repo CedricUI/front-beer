@@ -64,27 +64,13 @@ function Register () {
 
           const data = await response.json();
           console.log('Inscription réussie:', data);
+          alert('Inscription réussie ! Vérifiez votre email pour confirmer votre compte.');
           navigate('/connexion');
           
           } catch (error) {
           console.error('Erreur lors de l\'envoie de l\'inscription :', error.message);
         }
       };
-
-      // const sendConfirmationEmail = async () => {
-      //   try {
-      //     await fetch('http://127.0.0.1:8000/api/send-confirmation-email', {
-      //       method: 'POST',
-      //       headers: {
-      //         'Content-Type': 'application/json',
-      //       },
-      //       body: JSON.stringify({ email }),
-      //     });
-      //     console.log('Email de confirmation envoyé avec succès.');
-      //   } catch (error) {
-      //     console.error('Erreur lors de l\'envoi de l\'email de confirmation :', error.message);
-      //   }
-      // };
 
       const handleFormSubmit = (event) => {
         event.preventDefault();
@@ -100,7 +86,7 @@ function Register () {
               <input type="text" name="firstname" id="firstname" placeholder='Nom'onChange={(e) => setFirstname(e.target.value)}/>
               <input type="text" name="lastname" id="lastname" placeholder='Prénom'onChange={(e) => setLastname(e.target.value)}/>
               <input type="email" name="email" id="email" placeholder='Email'onChange={(e) => setEmail(e.target.value)}/>
-              <input type="email" name="email_verified_at" id="email_verified_at" placeholder='Vérification email'onChange={(e) => setEmailVerified(e.target.value)}/>
+              <input type="email" name="emailVerified" id="emailVerified" placeholder='Vérification email'onChange={(e) => setEmailVerified(e.target.value)}/>
               <input type="password" name="password" id="password" placeholder='Mot de passe' onChange={(e) => setPassword(e.target.value)}/>
               <label htmlFor="birthdate">Date de naissance</label>
               <input type="date" name="birthdate" id="birthdate" onChange={(e) => setBirthdate(e.target.value)}/>

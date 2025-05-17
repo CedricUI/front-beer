@@ -47,10 +47,12 @@ export const AuthProvider = ({ children }) => {
       Cookies.set('authToken', data.token, { expires: 7 }); // Expire dans 7 jours
       setAuthToken(data.token);
       console.log('Token stocké dans les cookies :', data.token);
+      window.location.href = '/';
       
       } catch (error) {
-        alert("Tu n'as pas confirmé ton adresse mail ! Retourne vite voir tes mails. Après on prendre tes bières !");
+        alert("Tu n'es pas inscrit ! Retourne vite voir tes mails. Après tu prendras tes bières !");
         console.error('Erreur lors de la connexion :', error.message);
+        window.location.href = '/register';
     }
   } 
 
