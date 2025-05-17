@@ -3,6 +3,7 @@ import './App.css';
 import Header from './components/header';
 import Home from './components/home';
 import PopUp from './components/PopUp';
+import Footer from './components/Footer';
 
 function App() {
   const [showPopup, setShowPopup] = useState(false);
@@ -37,6 +38,7 @@ function App() {
       )}
       <Header />
       <Home />
+      <Footer />
     </>
   )
 }

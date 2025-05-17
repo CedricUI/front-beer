@@ -2,6 +2,7 @@ import React from 'react';
 import '../styles/show-cart.css'; // Assurez-vous que le chemin d'importation est correct
 import Header from './header';
 import iconCart from "../assets/icon-cart.webp";
+import Footer from './Footer';
 
 function ShowCart({ cart }) {    
     const quantity = 1; // Remplacez ceci par la quantité réelle de l'article dans le panier
@@ -128,6 +129,9 @@ function ShowCart({ cart }) {
           ))}
         </ul>
       )} */}
+
+        <Footer />
+
                 
     </>
   );
