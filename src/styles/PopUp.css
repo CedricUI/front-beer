@@ -41,7 +41,6 @@
     color: #a21818;
     font-weight: bold;
 }
-
 .popup-button {
   background: #d9a535;
   color: white;
@@ -57,4 +56,14 @@
 .popup-button:focus {
   outline: none;
   box-shadow: 0 0 0 4px rgba(217, 165, 53, 0.5);
-}   
+}
+.popup-link {
+  margin-top: 5px;
+  border: none;
+  background: none;
+  color: #d9a535;
+  box-shadow: none;
+}
+.popup-link:hover {
+background-color: transparent;
+}

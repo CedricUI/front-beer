@@ -1,6 +1,6 @@
 import "../styles/PopUp.css";
 
-function PopUp ({ onClose }) {
+function PopUp ({ onConfirm, onDecline }) {
   return (
     <div className="popup">
       <div className="popup-content">
@@ -11,11 +11,18 @@ function PopUp ({ onClose }) {
         En fermant cette fenêtre, vous confirmez avoir l'âge légal pour consommer de l'alcool. Et par la même occasion de nous décharger de toute responsabilité ! 😎 <br />
         <span className="popup-message-warning">Attention l'alcool peut être dangereux pour la santé.</span>
         </p>
-        <button
-          onClick={onClose}
+         <button
+          onClick={onConfirm}
           className="popup-button"
         >
           Je ferme car je suis majeur ! 🍻
+        </button>
+        <br />
+        <button
+          onClick={onDecline}
+          className="popup-link"
+        >
+          Sinon on a un truc pour toi...🤫
         </button>
       </div>
     </div>
