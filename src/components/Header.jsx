@@ -4,7 +4,7 @@ import Logo from "./Logo";
 import Nav from "./nav";
 
 function Header() {
-    const currentDate = new Date()
+  const currentDate = new Date()
   const currentTime = currentDate.getHours();
   const itsTimeToDrinkBeer = currentTime >=18 || currentTime <= 4;
   const waitingTimeToDrink = 18 - currentTime;
