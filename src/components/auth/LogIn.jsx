@@ -15,9 +15,6 @@ function LogIn() {
       try {
           // Appel de la méthode login depuis le contexte
           await login(email, password);
-
-          // Redirection après connexion réussie
-            navigate(-1);
       } catch (error) {
           console.error('Erreur lors de la connexion :', error.message);
       }
@@ -26,7 +23,7 @@ function LogIn() {
   // Redirection si l'utilisateur est déjà connecté
   useEffect(() => {
       if (authToken) {
-          navigate(-1);
+        navigate('/');
       }
   }, [authToken, navigate]);
 

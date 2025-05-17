@@ -47,14 +47,15 @@ export const AuthProvider = ({ children }) => {
       Cookies.set('authToken', data.token, { expires: 7 }); // Expire dans 7 jours
       setAuthToken(data.token);
       console.log('Token stocké dans les cookies :', data.token);
-      window.location.href = '/';
-      
-      } catch (error) {
-        alert("Tu n'es pas inscrit ! Retourne vite voir tes mails. Après tu prendras tes bières !");
-        console.error('Erreur lors de la connexion :', error.message);
-        window.location.href = '/register';
+
+    } catch (error) {
+      console.error('Erreur lors de la connexion :', error.message);
+      alert("Tu n'es pas inscrit ! Inscris-toi. Après tu pourras prendre tes bières !");
+      // Vérifiez si le token est présent
+      // Si l'utilisateur n'est pas connecté, redirigez vers la page d'inscription
+      window.location.href = '/inscription';
     }
-  } 
+  }
 
   // Méthode logout
   const logout = async () => {
