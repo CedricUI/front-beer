@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { useAuth } from '../../context/AuthContext'; // Assurez-vous que le chemin est correct
 import { Link, useNavigate } from 'react-router-dom';
 import Header from '../header';
+import Footer from '../Footer';
 
 function LogIn() {
   const [email, setEmail] = useState('');
@@ -86,6 +87,7 @@ function LogIn() {
               </span>
             
           </form>
+          <Footer/>
         </>
 
         )
