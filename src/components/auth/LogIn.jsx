@@ -1,7 +1,7 @@
 import '../../styles/auth/log-in.css';
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../../context/AuthContext'; // Assurez-vous que le chemin est correct
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Header from '../header';
 
 function LogIn() {
@@ -35,7 +35,7 @@ function LogIn() {
           <Header/>
           {/* From Uiverse.io by Yaya12085 */}
           <form onSubmit={handleSubmit} method='POST' className="form">
-            <h1 className="form-title">Connectez vous à votre compte password</h1>
+            <h1 className="form-title">Connectez vous à votre compte</h1>
             <div className="input-container">
               <input placeholder="Entrer votre email" type="text" name='email' onChange={(e) => setEmail(e.target.value)}/>
               <span>
@@ -81,9 +81,13 @@ function LogIn() {
             <button className="submit" type="submit">
               Se connecter
             </button>
-            <span className="signup-link">
-              Pas encore de compte ? 😲 <a href="">S'inscrire</a>
-            </span>
+              <span className="signup-link">
+                Pas encore de compte ? 😲 
+                <Link to="/inscription">
+                  <span>S'inscrire</span>
+                </Link>
+              </span>
+            
           </form>
         </>
 

@@ -9,7 +9,7 @@ import ShowCart from './components/ShowCart.jsx';
 import LogIn from './components/auth/LogIn.jsx';
 import { AuthProvider, useAuth } from './context/AuthContext.jsx';
 import Account from './components/Account.jsx';
-
+import Register from './components/auth/Register.jsx';
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <BrowserRouter>
@@ -21,6 +21,7 @@ createRoot(document.getElementById('root')).render(
           <Route path="/panier" element={<ProtectedRoute component={ShowCart} />} />
           <Route path="/connexion" element={<LogIn />} />
           <Route path="/déconnexion" element={<Account />} />
+          <Route path="/inscription" element={<Register />} />
         </Routes>
       </AuthProvider>
     </BrowserRouter>

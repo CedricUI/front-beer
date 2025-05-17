@@ -41,14 +41,18 @@ export const AuthProvider = ({ children }) => {
         throw new Error("Pas de token reçu !");
       }          
       console.log('data :', data);
+      console.log('data.user.email_verified_at :', data.user.email_verified_at);
 
        // Stocker le token dans les cookies et mettre à jour l'état
       Cookies.set('authToken', data.token, { expires: 7 }); // Expire dans 7 jours
       setAuthToken(data.token);
       console.log('Token stocké dans les cookies :', data.token);
+      window.location.href = '/';
       
       } catch (error) {
-      console.error('Erreur lors de la connexion :', error.message);
+        alert("Tu n'es pas inscrit ! Retourne vite voir tes mails. Après tu prendras tes bières !");
+        console.error('Erreur lors de la connexion :', error.message);
+        window.location.href = '/register';
     }
   } 
 
