@@ -16,6 +16,14 @@ function LogIn() {
       try {
           // Appel de la méthode login depuis le contexte
           await login(email, password);
+
+          // Remise à zéro des champs
+          setEmail('');
+          setPassword('');
+
+          // Redirection après connexion réussie
+            navigate(-1);
+
       } catch (error) {
           console.error('Erreur lors de la connexion :', error.message);
       }
@@ -35,7 +43,7 @@ function LogIn() {
           <form onSubmit={handleSubmit} method='POST' className="form">
             <h1 className="form-title">Connectez vous à votre compte</h1>
             <div className="input-container">
-              <input placeholder="Entrer votre email" type="text" name='email' onChange={(e) => setEmail(e.target.value)}/>
+              <input placeholder="Entrer votre email" type="email" name='email' onChange={(e) => setEmail(e.target.value)}/>
               <span>
                 <svg
                   stroke="currentColor"
@@ -85,7 +93,6 @@ function LogIn() {
                   <span>S'inscrire</span>
                 </Link>
               </span>
-            
           </form>
           <Footer/>
         </>
