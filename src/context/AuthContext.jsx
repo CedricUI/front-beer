@@ -13,20 +13,51 @@ export const AuthProvider = ({ children }) => {
   // Récupérer le token depuis les cookies au premier rendu
   useEffect(() => {
     const token = Cookies.get('authToken');
-    setAuthToken(token || null); // Si aucun token, définissez null
-    console.log("Token récupéré depuis les cookies :", token);
-  }, []); // [] signifie que cet effet s'exécute uniquement au premier rendu
+    
+     if (token) {
+    // Appel à Laravel pour vérifier que le token est encore bon
+    fetch('http://127.0.0.1:8000/api/user', {
+      method: 'GET',
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      },
+    })
+    .then(res => {
+      if (!res.ok) throw new Error("Token invalide ou expiré");
+      return res.json();
+    })
+    .then(userData => {
+      console.log("Utilisateur connecté :", userData);
+      setAuthToken(token);
+      // Tu peux aussi stocker les infos dans un `setUser(userData)` si tu veux
+    })
+    .catch(err => {
+      console.error("Erreur lors de la vérification du token :", err);
+      Cookies.remove('authToken');
+      setAuthToken(null);
+    });
+  } else {
+    setAuthToken(null);
+  }
+}, []);
+    
+  //   setAuthToken(token || null); // Si aucun token, définissez null
+  //   console.log("Token récupéré depuis les cookies :", token);
+  // }, []); // [] signifie que cet effet s'exécute uniquement au premier rendu
 
+  
   // Méthode login
   const login = async (email, password) => {
     
     try {
-      const response = await fetch('http://127.0.0.1:8000/api/authenticate', {
+      const response = await fetch('http://127.0.0.1:8000/api/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({ email, password }),
+        credentials: 'include',  // IMPORTANT pour Sanctum
       });
   
       if (!response.ok) {
@@ -79,8 +110,10 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  const isAuthenticated = !!authToken;
+
   return (
-    <AuthContext.Provider value={{ authToken, login, logout }}>
+    <AuthContext.Provider value={{ authToken, login, logout, isAuthenticated }}>
       {children}
     </AuthContext.Provider>
   );
