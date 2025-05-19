@@ -1,5 +1,4 @@
 footer{
-    max-width: 1200px;
     width: 100%;
     margin-top: 60px;
     background-color: #333;
@@ -7,12 +6,16 @@ footer{
     color: white;
     font-size: 0.9rem;
     font-weight: 400;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 .footer-content {
+    max-width: 1200px;
     width: 100%;
-  display: flex;
-  justify-content:space-around;
-  align-items: center;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
 }
 .footer-nav-links {
     width: max-content;

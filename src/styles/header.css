@@ -1,36 +1,40 @@
 .header {
     width: 100%;
-    margin: 0;
     display: flex;
     justify-content: space-between;
     background-color: #fbfbfb;
-    border-bottom: 1px solid #d9a535;
     padding: 1rem;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    border: 1px solid #d9a535;
     margin-bottom: 60px;
- 
+    z-index: 1;
 }
 .identity-ecommerce {
     display: flex;
-    flex-direction: column;
     align-items: center;
     justify-content: center;
     gap: 1rem;
     margin-left: 2rem;
 }
+.identity{
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+}
 .brand {
+    margin: 0;
     font-size: 2rem;
     font-weight: 700;
     color: #d9a535;
     text-decoration: none;
-    text-align: center;
+    text-align: start;
 }
 .catchphrase{
-  width: 350px;
+    margin: 0;
+    max-width: 350px;
+    width: 350px;
     font-size: 1rem;
     font-weight: 400;
     color: #d9a535;
-    text-align: center;
-    margin-top: 0.5rem;
+    text-align: start;
+    /* margin-top: 0.5rem; */
 }
