@@ -61,6 +61,22 @@ function ShowCart({ }) {
 
   console.log(cart);
 
+  // Modifier quantité
+  const handleUpdateQuantity = (itemId, newQuantity) => {
+    if (newQuantity < 1) return;
+
+    setCart(prevCart =>
+      prevCart.map(item =>
+        item.id === itemId ? { ...item, quantity: newQuantity } : item
+      )
+    );
+  };
+
+  // Supprimer un item
+  const handleRemoveItem = (itemId) => {
+    setCart(prevCart => prevCart.filter(item => item.id !== itemId));
+  };
+
 
   return (
     <>
@@ -73,6 +89,7 @@ function ShowCart({ }) {
                 ) : (
                   <ul>
                     {cart.map((item, index) => (
+                      console.log("Item actuel:", item),
                       <li key={item.id || index} className="cart-item">
                         <div className='container-img'>
                           <img src={item.product_variant.product.image_url || "#"} alt={item.product_variant.product.name} className='image' />
@@ -80,21 +97,22 @@ function ShowCart({ }) {
                         <div className='cart-decscription'>
                             <h3>Nom du produit : {item.product_variant.product.name}</h3>
                           <div>
-                            <span className="alcohol-degree">Degré d'alcool : {item.product_variant.product.alcohol_degree}%</span>
-                            <span className="volume"> - Contenance : {item.product_variant.product.volume}cl</span>
+                            <span className="alcohol-degree">Degré d'alcool : {item.product_variant.product.alcohol_degree} %</span>
+                            <span className="volume">Contenance : {item.product_variant.volume}</span>
                           </div>
-                          <span>Il ne reste plus que {item.product_variant.stock_quantity} en stock</span>
+                          <span>Il ne reste plus que {item.product_variant.stock_quantity} unités en stock</span>
                           <div className='btn-description'>
                             <div className='btn-quantity'>
                               <button onClick={() => handleUpdateQuantity(item.id, item.quantity - 1)} disabled={item.quantity <= 1}>-</button>
-                              <input type="number" value={item.quantity} readOnly />
-                              <button onClick={() => handleUpdateQuantity(item.id, item.quantity + 1)} disabled={item.product_variant.stock_quantity >= item.quantity}>+</button>
+                              <input type="number" value={item.quantity} readOnly step="1" />
+                              <button onClick={() => handleUpdateQuantity(item.id, item.quantity + 1)} disabled={item.quantity >= item.product_variant.stock_quantity}>+</button>
                             </div>
                             <button onClick={() => handleRemoveItem(item.id)}>🗑️</button>
                           </div>
                         </div>
                         <div className='display-price'>
-                          <span>{item.product_variant.price_with_tax * item.quantity} €</span>
+                          <span>{((Number(item.price_with_tax) * Number(item.quantity))/100).toFixed(2)} €</span>
+                          
                         </div>
                       </li>
                     ))}
