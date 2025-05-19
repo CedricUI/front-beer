@@ -41,8 +41,8 @@ function Products() {
           <h1>Products</h1>
           <p>Voici quelques uns de nos produits.</p>
           <ProductCard /> 
-          <Footer />
         </div>
+        <Footer />
     </div>
     </>
   );
