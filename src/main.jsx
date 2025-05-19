@@ -10,6 +10,17 @@ import LogIn from './components/auth/LogIn.jsx';
 import { AuthProvider, useAuth } from './context/AuthContext.jsx';
 import Account from './components/Account.jsx';
 import Register from './components/auth/Register.jsx';
+
+function ProtectedRoute({ component: Component }) {
+  const { authToken } = useAuth();
+
+  useEffect(() => {
+    console.log("Le Auth Token a changé, jeton actuel :", authToken);
+  }, [authToken]);
+
+  return authToken ? <Component /> : <Navigate to="/connexion" replace />;
+};
+
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <BrowserRouter>
@@ -27,12 +38,4 @@ createRoot(document.getElementById('root')).render(
     </BrowserRouter>
   </StrictMode>,
 );
-function ProtectedRoute({ component: Component }) {
-  const { authToken } = useAuth();
 
-  useEffect(() => {
-    console.log("Le Auth Token a changé, jeton actuel :", authToken);
-  }, [authToken]);
-
-  return authToken ? <Component /> : <Navigate to="/connexion" replace />;
-};

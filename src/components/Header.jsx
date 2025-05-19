@@ -2,8 +2,12 @@ import React from 'react';
 import "../styles/header.css"; // Import your CSS file here
 import Logo from "./Logo";
 import Nav from "./nav";
+import { useAuth } from '../context/AuthContext';
 
 function Header() {
+
+  const { authToken } = useAuth(); /** Ajour pour vérifier que je suis connectée */
+
   const currentDate = new Date()
   const currentTime = currentDate.getHours();
   const itsTimeToDrinkBeer = currentTime >=18 || currentTime <= 4;

@@ -4,6 +4,7 @@ import Header from './components/header';
 import Home from './components/home';
 import PopUp from './components/PopUp';
 import Footer from './components/Footer';
+import ShowCart from './components/ShowCart'
 
 function App() {
   const [showPopup, setShowPopup] = useState(false);
@@ -38,6 +39,7 @@ function App() {
       )}
       <Header />
       <Home />
+      {/* <ShowCart /> */}
       <Footer />
     </>
   )

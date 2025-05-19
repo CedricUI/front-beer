@@ -53,19 +53,23 @@ function ShowCart({ cart }) {
                         <img src="#" alt="image produit" className='image' />
                     </div>
                     <div className='cart-decscription'>
-                        <h3>Nom du produit <span>Alc 1%</span> <span>Volume 25 Cl</span> <span>description</span></h3>
-                        <span>Il ne reste plus que {stock} en stock</span>
+                        <h3>Nom du produit : </h3>
+                        <div>
+                          <span className="alcohol-degree">Degré d'alcool : </span>
+                          <span className="volume">Contenance : </span> 
+                        </div>
+                        
+                        <span>Il n'en reste plus que {stock} en stock</span>
                         <div className='btn-description'>
                             <div className='btn-quantity'>
                                 <button>-</button>
                                 <input type="number" value={quantity} min="1" max="10" />
                                 <button>+</button>
                             </div>
-                            <button>🗑️</button>
+                            <button>&#10006;</button>
                         </div>
                     </div>
                     <div className='display-price'>
-                        <span>Prix :</span>
                         <span>{price1} €</span>
                     </div>
                 </li>
@@ -104,8 +108,8 @@ function ShowCart({ cart }) {
                     </div>
                     <div className='btn-total'>
                       <button>Continuer les achats</button>
-                      <button>Vider le panier</button>
-                      <button>Retour</button>  
+                      {/* <button>Vider le panier</button> */}
+                      {/* <button>Retour</button>   */}
                     </div>
                 </div>
             </div>
