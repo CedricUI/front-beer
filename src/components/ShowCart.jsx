@@ -1,44 +1,66 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { useAuth } from '../context/AuthContext'; // ← adapte le chemin selon ton projet
 import '../styles/show-cart.css'; // Assurez-vous que le chemin d'importation est correct
 import Header from './header';
 import iconCart from "../assets/icon-cart.webp";
 import Footer from './Footer';
 
-function ShowCart({ cart }) {    
-    const quantity = 1; // Remplacez ceci par la quantité réelle de l'article dans le panier
-    const stock = 5; // Remplacez ceci par le stock réel de l'article
-    const articleNumber = "2 articles"; // Remplacez ceci par le nombre réel d'articles dans le panier
-    const price1 = 10;
-    const price2 = 15;
 
+function ShowCart({ }) {  
+  console.log("Composant ShowCart monté");
 
-    // const handleRemove = (itemId) => {
-    //     // Logique pour supprimer l'élément du panier
-    // };
-    // const handleUpdateQuantity = (itemId, newQuantity) => {
-    //     // Logique pour mettre à jour la quantité de l'élément dans le panier
-    // };
-    // const handleUpdate = (itemId, newQuantity) => {
-    //     // Logique pour mettre à jour la quantité de l'élément dans le panier
-    // };
-    // const handleClearCart = () => {
-    //     // Logique pour vider le panier
-    // };
-    // const handleCheckout = () => {
-    //     // Logique pour passer à la caisse
-    // };
-    // const handleContinueShopping = () => {
-    //     // Logique pour continuer les achats 
-    // };
-    // const handleBack = () => {
-    //     // Logique pour revenir à la page précédente
-    // };
-    // const handleEmptyCart = () => {
-    //     // Logique pour vider le panier
-    // };
-    // const handleContinue = () => {
-    //     // Logique pour continuer les achats
-    // };
+  const { authToken } = useAuth();
+  console.log("Token depuis useAuth :", authToken);
+
+  const [cart, setCart] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  // Optionnel : console.log à chaque changement de token pour debug
+  useEffect(() => {
+    console.log("Le token dans ShowCart a changé :", authToken);
+  }, [authToken]);
+
+  useEffect(() => {
+    if (!authToken) {
+      console.warn("Token encore indisponible, on attend…");
+      return;
+    }
+
+    console.log("Token utilisé pour le fetch :", authToken);
+
+    fetch('http://localhost:8000/api/cart/show', {
+      headers: {
+        'Authorization': `Bearer ${authToken}`,
+        'Content-Type': 'application/json',
+      }
+    })
+      .then(async res => {
+        const text = await res.text(); // On lit le body une fois pour debugger
+        console.log("Statut de la réponse :", res.status);
+        console.log("Contenu brut :", text);
+
+        if (!res.ok) {
+          throw new Error(`Erreur HTTP ${res.status}`);
+        }
+
+        // Parse manuellement le JSON (on ne relit pas le body, déjà consommé)
+        return JSON.parse(text);
+      })
+      .then(data => {
+        console.log("Données panier reçues :", data);
+        // On sécurise l'accès au tableau d'items dans la réponse
+        setCart(data.items || data.panier?.items || []);
+        setLoading(false);
+      })
+      .catch(error => {
+        console.error("Erreur attrapée dans catch :", error.message);
+        setCart([]);
+        setLoading(false);
+      });
+  }, [authToken]);
+
+  console.log(cart);
+
 
   return (
     <>
@@ -46,99 +68,58 @@ function ShowCart({ cart }) {
         <div className="show-cart-container">
             <h1>Panier</h1>
             <div className="cart-container">
-              <ul>
-
-                <li key={1} className="cart-item">
-                    <div className='container-img'>
-                        <img src="#" alt="image produit" className='image' />
-                    </div>
-                    <div className='cart-decscription'>
-                        <h3>Nom du produit : </h3>
-                        <div>
-                          <span className="alcohol-degree">Degré d'alcool : </span>
-                          <span className="volume">Contenance : </span> 
+                {cart.length === 0 ? (
+                  <p>Votre panier est vide.</p>
+                ) : (
+                  <ul>
+                    {cart.map((item, index) => (
+                      <li key={item.id || index} className="cart-item">
+                        <div className='container-img'>
+                          <img src={item.product_variant.product.image_url || "#"} alt={item.product_variant.product.name} className='image' />
                         </div>
-                        
-                        <span>Il n'en reste plus que {stock} en stock</span>
-                        <div className='btn-description'>
+                        <div className='cart-decscription'>
+                            <h3>Nom du produit : {item.product_variant.product.name}</h3>
+                          <div>
+                            <span className="alcohol-degree">Degré d'alcool : {item.product_variant.product.alcohol_degree}%</span>
+                            <span className="volume"> - Contenance : {item.product_variant.product.volume}cl</span>
+                          </div>
+                          <span>Il ne reste plus que {item.product_variant.stock_quantity} en stock</span>
+                          <div className='btn-description'>
                             <div className='btn-quantity'>
-                                <button>-</button>
-                                <input type="number" value={quantity} min="1" max="10" />
-                                <button>+</button>
+                              <button onClick={() => handleUpdateQuantity(item.id, item.quantity - 1)} disabled={item.quantity <= 1}>-</button>
+                              <input type="number" value={item.quantity} readOnly />
+                              <button onClick={() => handleUpdateQuantity(item.id, item.quantity + 1)} disabled={item.product_variant.stock_quantity >= item.quantity}>+</button>
                             </div>
-                            <button>&#10006;</button>
+                            <button onClick={() => handleRemoveItem(item.id)}>🗑️</button>
+                          </div>
                         </div>
-                    </div>
-                    <div className='display-price'>
-                        <span>{price1} €</span>
-                    </div>
-                </li>
-
-                <li key={1} className="cart-item">
-                    <div className='container-img'>
-                        <img src="#" alt="image produit" className='image' />
-                    </div>
-                    <div className='cart-decscription'>
-                        <h3>Nom du produit <span>Alc 1%</span> <span>Volume 25 Cl</span> <span>description</span></h3>
-                        <span>Il ne reste plus que {stock} en stock</span>
-                        <div className='btn-description'>
-                            <div className='btn-quantity'>
-                                <button>-</button>
-                                <input type="number" value={quantity} min="1" max="10" />
-                                <button>+</button>
-                            </div>
-                            <button>🗑️</button>
+                        <div className='display-price'>
+                          <span>{item.product_variant.price_with_tax * item.quantity} €</span>
                         </div>
-                    </div>
-                    <div className='display-price'>
-                        <span>Prix :</span>
-                        <span>{price2} €</span>
-                    </div>
-                </li>
+                      </li>
+                    ))}
+                  </ul>
+                )}
 
-                
-              </ul>
-
-                <div className='container-total'>
+                {cart.length > 0 && (
+                  <div className='container-total'>
                     <div className='total-display'>
-                      <h3>Total :</h3>
-                      <span>( {articleNumber} )</span>
-                      <span>{price1 + price2} €</span>
-                      <button>Commander</button>
-                    </div>
-                    <div className='btn-total'>
-                      <button>Continuer les achats</button>
-                      {/* <button>Vider le panier</button> */}
-                      {/* <button>Retour</button>   */}
-                    </div>
+                    <h3>Total :</h3>
+                    {/* <span>({articleNumber})</span> */}
+                    {/* <span>{total} €</span> */}
+                    <button>Commander</button>
+                  </div>
+                  <div className='btn-total'>
+                    <button>Continuer les achats</button>
+                  </div>
                 </div>
+                )}
             </div>
+          </div>
+          <Footer />
+        </>
+      );
+    }
 
-            
-            
-        </div>
-      
-            
-
-      {/* {cart.length === 0 ? (
-        <p>Your cart is empty.</p>
-      ) : (
-        <ul>
-           C'est ici que vous mapperez les éléments du panier et les afficherez
-
-          {cart.map((item, index) => (
-            <li key={index}>
-              {item.name} - ${item.price}
-            </li>
-          ))}
-        </ul>
-      )} */}
-
-        <Footer />
-
-                
-    </>
-  );
-}
 
 export default ShowCart;

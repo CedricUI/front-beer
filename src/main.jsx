@@ -11,31 +11,27 @@ import { AuthProvider, useAuth } from './context/AuthContext.jsx';
 import Account from './components/Account.jsx';
 import Register from './components/auth/Register.jsx';
 
-function ProtectedRoute({ component: Component }) {
+function ProtectedRoute({ children }) {
   const { authToken } = useAuth();
 
-  useEffect(() => {
-    console.log("Le Auth Token a changé, jeton actuel :", authToken);
-  }, [authToken]);
-
-  return authToken ? <Component /> : <Navigate to="/connexion" replace />;
+   return authToken ? children : <Navigate to="/connexion" replace />;
 };
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <BrowserRouter>
-      <AuthProvider>
+    <AuthProvider>
+      <BrowserRouter>
         <Routes>
           <Route path="/" element={<App />} />
           <Route path="/products" element={<Products />} />
           <Route path="/products/:id" element={<ShowProduct />} />
-          <Route path="/panier" element={<ProtectedRoute component={ShowCart} />} />
+          <Route path="/panier" element={<ProtectedRoute><ShowCart /></ProtectedRoute>} />
           <Route path="/connexion" element={<LogIn />} />
           <Route path="/déconnexion" element={<Account />} />
           <Route path="/inscription" element={<Register />} />
         </Routes>
-      </AuthProvider>
-    </BrowserRouter>
+      </BrowserRouter>
+    </AuthProvider>
   </StrictMode>,
 );
 
