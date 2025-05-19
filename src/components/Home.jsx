@@ -2,10 +2,10 @@ import '../styles/home.css';
 function Home() {
   return (
     <>
-    <section>
-      <h1 className="title1">E-beer</h1>
-      <p>Découvrer notre selection de bières du monde entier</p>
-      <button>Notre boutique</button>
+    <section className="home-section-titre">
+      <h1 className="title1">Trink</h1>
+      <p>Découvrer notre selection de bières du monde entier <br /> </p>
+       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512" className='section-svg-home'><path fill="#ffffff" d="M169.4 470.6c12.5 12.5 32.8 12.5 45.3 0l160-160c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L224 370.8 224 64c0-17.7-14.3-32-32-32s-32 14.3-32 32l0 306.7L54.6 265.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l160 160z"/></svg>
     </section>
     <section className="section-productions">
       <h2 className="title2">Productions vedette</h2>
@@ -56,20 +56,29 @@ function Home() {
           </div>
         </div>
     </section>
-    <div className="about-container">
-        <section className="about-section">
-          <h2>À propos de nous !</h2>
-          <p className="about">
-            Nous sommes passionnés par la bière et nous voulons partager notre amour
-            pour cette boisson avec vous. Notre sélection de bières artisanales
-            provient des meilleurs brasseurs du monde entier.
-            <br /> Nous croyons que chaque gorgée de bière raconte une histoire, et
-            nous voulons vous aider à découvrir ces histoires.
-          </p>
-        </section>
+    <section className="about-section">
+            <div className='about-image'></div>
+      {/* <img src="../../public/20250519_1058_Bière du Monde_simple_compose_01jvkw55zgfc6twn29c2mbdkd8.png" alt=""/> */}
+      <div>
+        <h2 className='h2-about'>À propos de nous !</h2>
+            <p className="about">
+              Nous sommes passionnés par la bière et nous voulons partager notre amour
+              pour cette boisson avec vous. Notre sélection de bières artisanales
+              provient des meilleurs brasseurs du monde entier.
+              <br /> Nous croyons que chaque gorgée de bière raconte une histoire, et
+              nous voulons vous aider à découvrir ces histoires.
+              <br /> Que vous soyez un amateur de bière ou un novice, nous avons
+              quelque chose pour vous. Notre équipe est là pour vous guider dans
+              votre exploration de la bière.
+              <br /> Nous sommes impatients de vous accueillir dans notre boutique et
+              de vous aider à trouver la bière parfaite pour chaque occasion.
+            </p>
+      </div>
+    </section>
+    <div className="contact-container">
         <section className="contact-section">
           <h2>Contactez-nous</h2>
-          <p>Pour toute question ou demande, n'hésitez pas à nous contacter.</p>
+          <p>Pour toute question ou demande, <br />n'hésitez pas à nous contacter.</p>
           <form className='contact-form'>
             <label htmlFor="name">Nom:</label>
             <input type="text" id="name" name="name" required="" />

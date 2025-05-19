@@ -12,11 +12,11 @@ function Header() {
   return (
     <header className="header">
         <div className="identity-ecommerce">
-          <div>
             <Logo className="logo-trink"/>
-            <span className="brand">Trink !</span><br />
+          <div className="identity">
+              <span className="brand">Trink !</span>
+              <span className="catchphrase">{ catchphrase } <br />... dites-le avec l'accent que vous voulez ;)</span>
           </div>
-          <span className="catchphrase">{ catchphrase } <br />... dites-le avec l'accent que vous voulez ;)</span>
         </div>
       <Nav/>
     </header>
