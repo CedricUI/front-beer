@@ -58,6 +58,14 @@
     margin-bottom: 0.5em;
     text-transform: capitalize;
 }
+.volume-alc-info{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 10px;
+    font-size: 0.9em;
+    color: #4f4f4f;
+}
 .availability {
     position: absolute;
     top: 120px;
