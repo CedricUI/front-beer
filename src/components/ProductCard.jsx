@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { useState, useEffect } from "react";
 import "../styles/product-card.css";
+import priceWithTax from "../js/priceWithTax";
 
 function ProductCard() {
     const [showProduct, setShowProduct] = useState(null);
@@ -49,7 +50,7 @@ function ProductCard() {
                                 <h3>{product.name}</h3>
                                 <div>
                                     <span className="category">{product.category} </span>
-                                    <span>{product.product_variants[0]?.price_without_tax/100} €</span>
+                                    <span>{priceWithTax(product.product_variants[0]?.price_without_tax, product.product_variants[0]?.tax_amount)} €</span>
                                 </div>
                                 <button>Voir le produit</button>
                             </div>
