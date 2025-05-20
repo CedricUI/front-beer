@@ -6,6 +6,7 @@ import App from './App.jsx';
 import Products from './components/Products.jsx';
 import ShowProduct from './components/ShowProduct.jsx';
 import ShowCart from './components/ShowCart.jsx';
+import Checkout from './components/Checkout.jsx';
 import LogIn from './components/auth/LogIn.jsx';
 import { AuthProvider, useAuth } from './context/AuthContext.jsx';
 import Account from './components/Account.jsx';
@@ -26,6 +27,7 @@ createRoot(document.getElementById('root')).render(
           <Route path="/products" element={<Products />} />
           <Route path="/products/:id" element={<ShowProduct />} />
           <Route path="/panier" element={<ProtectedRoute><ShowCart /></ProtectedRoute>} />
+          <Route path="/commande" element={<ProtectedRoute><Checkout /></ProtectedRoute>} />
           <Route path="/connexion" element={<LogIn />} />
           <Route path="/déconnexion" element={<Account />} />
           <Route path="/inscription" element={<Register />} />
