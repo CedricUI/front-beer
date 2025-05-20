@@ -2,6 +2,7 @@ import { useParams } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import Cookies from 'js-cookie'; 
 import '../styles/ProductId.css'; 
+import priceWithTax from '../js/priceWithTax';
 
 function ProductId() {
   const { id } = useParams(); // Récupère l'ID du produit depuis l'URL
@@ -140,7 +141,7 @@ function ProductId() {
             <div className='product-variant-description brut'>
                   <span style={{ textDecorationLine: productItem.product.product_variants[0].available?'' 
                     : 'line-through', color: productItem.product.product_variants[0].available?'' 
-                    :'grey' }}>{productItem.product.product_variants[0].price_without_tax / 100} € </span>
+                    :'grey' }}>{priceWithTax(productItem.product.product_variants[0].price_without_tax, productItem.product.product_variants[0].tax_amount)} € </span>
                   <span style={{ color: productItem.product.product_variants[0].available?'' 
                     :'red' }}>
                     {productItem.product.product_variants[0].available 
@@ -152,7 +153,7 @@ function ProductId() {
                 <div key={productVariant.id} id={productVariant.id} className='product-variant-description'>
                     <span style={{ textDecorationLine: productVariant.available?'' 
                       : 'line-through', color: productVariant.available?'' 
-                      :'grey' }}>{productVariant.price_without_tax / 100} € </span>
+                      :'grey' }}>{priceWithTax(productVariant.price_without_tax, productVariant.tax_amount)} € </span>
                     <span style={{ color: productVariant.available?'' 
                       :'red' }}>
                       {productVariant.available 
