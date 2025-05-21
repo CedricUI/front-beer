@@ -2,6 +2,7 @@ import { useCart } from '../context/CartContext'; // Ajoute cette ligne
 import "../styles/cart.css";
 import iconCart from "../assets/icon-cart.webp";
 import { Link } from 'react-router-dom';
+import { useEffect, useState } from "react";
 
 function Cart () {
   const { articleNumber } = useCart();
