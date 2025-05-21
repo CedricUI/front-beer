@@ -1,0 +1,41 @@
+.checkout {
+  padding: 2rem;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.cart-summary ul {
+  padding-left: 1rem;
+}
+
+.cart-summary li {
+  margin-bottom: 0.5rem;
+}
+
+.checkout-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+fieldset {
+  border: 1px solid #ccc;
+  padding: 1rem;
+}
+
+legend {
+  font-weight: bold;
+}
+
+label {
+  display: flex;
+  flex-direction: column;
+}
+
+button {
+  background: orangered;
+  color: white;
+  padding: 0.5rem 1rem;
+  border: none;
+  cursor: pointer;
+}

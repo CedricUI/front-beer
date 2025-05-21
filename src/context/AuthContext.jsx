@@ -9,42 +9,50 @@ export function useAuth() {
 
 export const AuthProvider = ({ children }) => {
   const [authToken, setAuthToken] = useState(null); // Initialisation correcte du token
+  const [loading, setLoading] = useState(true); // ➕ Ajout
 
   // Récupérer le token depuis les cookies au premier rendu
   useEffect(() => {
     const token = Cookies.get('authToken');
+    console.log("Token dans cookies :", token);
     
      if (token) {
     // Appel à Laravel pour vérifier que le token est encore bon
-    fetch('http://127.0.0.1:8000/api/user', {
-      method: 'GET',
-      headers: {
-        'Authorization': `Bearer ${token}`,
-        'Content-Type': 'application/json',
-      },
-    })
-    .then(res => {
-      if (!res.ok) throw new Error("Token invalide ou expiré");
-      return res.json();
-    })
-    .then(userData => {
-      console.log("Utilisateur connecté :", userData);
-      setAuthToken(token);
-      // Tu peux aussi stocker les infos dans un `setUser(userData)` si tu veux
-    })
-    .catch(err => {
-      console.error("Erreur lors de la vérification du token :", err);
-      Cookies.remove('authToken');
-      setAuthToken(null);
-    });
+        fetch('http://127.0.0.1:8000/api/user', {
+          method: 'GET',
+          headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        },
+      })
+      .then(res => {
+        if (!res.ok) throw new Error("Token invalide ou expiré");
+        return res.json();
+      })
+      .then(userData => {
+        console.log("Utilisateur connecté :", userData);
+        setAuthToken(token);
+        // Tu peux aussi stocker les infos dans un `setUser(userData)` si tu veux
+      })
+      .catch(err => {
+        console.error("Erreur lors de la vérification du token :", err);
+        Cookies.remove('authToken');
+        setAuthToken(null);
+        })
+      .finally(() => {
+        setLoading(false); // ✅ toujours terminer ici !
+      });
   } else {
     setAuthToken(null);
+    setLoading(false); // ➕ Fin du chargement
   }
 }, []);
     
-  //   setAuthToken(token || null); // Si aucun token, définissez null
-  //   console.log("Token récupéré depuis les cookies :", token);
+
+  //     setAuthToken(token || null); // Si aucun token, définissez null
+  //     console.log("Token récupéré depuis les cookies :", token);
   // }, []); // [] signifie que cet effet s'exécute uniquement au premier rendu
+  
 
   
   // Méthode login
@@ -57,7 +65,7 @@ export const AuthProvider = ({ children }) => {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({ email, password }),
-        credentials: 'include',  // IMPORTANT pour Sanctum
+        // credentials: 'include',  // IMPORTANT pour Sanctum
       });
   
       if (!response.ok) {
@@ -75,7 +83,10 @@ export const AuthProvider = ({ children }) => {
       console.log('data.user.email_verified_at :', data.user.email_verified_at);
 
        // Stocker le token dans les cookies et mettre à jour l'état
-      Cookies.set('authToken', data.token, { expires: 7 }); // Expire dans 7 jours
+      Cookies.set('authToken', data.token, { expires: 7, 
+        path: '/',
+        secure: false
+      }); // Expire dans 7 jours
       setAuthToken(data.token);
       console.log('Token stocké dans les cookies :', data.token);
 
@@ -113,7 +124,7 @@ export const AuthProvider = ({ children }) => {
   const isAuthenticated = !!authToken;
 
   return (
-    <AuthContext.Provider value={{ authToken, login, logout, isAuthenticated }}>
+    <AuthContext.Provider value={{ authToken, login, logout, isAuthenticated, loading }}>
       {children}
     </AuthContext.Provider>
   );

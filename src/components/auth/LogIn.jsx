@@ -17,9 +17,9 @@ function LogIn() {
           // Appel de la méthode login depuis le contexte
           await login(email, password);
 
-          // Remise à zéro des champs
-          setEmail('');
-          setPassword('');
+          // // Remise à zéro des champs
+          // setEmail('');
+          // setPassword('');
 
           // Redirection après connexion réussie
             navigate(-1);
@@ -30,11 +30,11 @@ function LogIn() {
   };
 
   // Redirection si l'utilisateur est déjà connecté
-  useEffect(() => {
-      if (authToken) {
-        navigate('/');
-      }
-  }, [authToken, navigate]);
+      useEffect(() => {
+          if (authToken) {
+            navigate('/');
+          }
+      }, [authToken, navigate]);
 
     return(
         <>
