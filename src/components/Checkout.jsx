@@ -10,13 +10,15 @@ function Checkout() {
   const navigate = useNavigate();
 
   const [cart, setCart] = useState([]);
+  const [identity, setIdentity] = useState([]);
   const [totals, setTotals] = useState({ ht: 0, tax: 0, ttc: 0 });
   const [formData, setFormData] = useState({
     phone: '',
     address: '',
     zipcode: '',
     city: '',
-    accepted: false,
+    'privacy-policy': true,
+    'terms-of-sale': true
   });
 
   useEffect(() => {
@@ -30,18 +32,21 @@ function Checkout() {
     })
       .then(res => res.json())
       .then(data => {
-        const items = data.items || data.panier?.items || [];
+        const items = data.order.items || [];
+        const infosUser = data.user || [];
         setCart(items);
+        setIdentity(infosUser);
+        console.log('Ceci est mon panier récupéré :', cart)
 
         // const ht = items.reduce((acc, item) => acc + item.price_without_tax * item.quantity, 0);
         // const tax = items.reduce((acc, item) => acc + item.tax_amount * item.quantity, 0);
         // const ttc = items.reduce((acc, item) => acc + item.price_with_tax * item.quantity, 0);
 
-        setTotals({
-          ht: (ht / 100).toFixed(2),
-          tax: (tax / 100).toFixed(2),
-          ttc: (ttc / 100).toFixed(2),
-        });
+        // setTotals({
+        //   ht: (ht / 100).toFixed(2),
+        //   tax: (tax / 100).toFixed(2),
+        //   ttc: (ttc / 100).toFixed(2),
+        // });
       });
   }, [authToken]);
 
@@ -55,7 +60,7 @@ function Checkout() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!formData.accepted) {
+    if (!formData['terms-of-sale']) {
       alert('Veuillez accepter les conditions générales.');
       return;
     }
@@ -72,14 +77,17 @@ function Checkout() {
           address: formData.address,
           zipcode: formData.zipcode,
           city: formData.city,
+          'terms-of-sale': true,
         }),
       });
+
+      console.log(formData);
 
       if (!res.ok) throw new Error('Erreur lors de la création de la commande');
 
       const data = await res.json();
       alert('Commande créée avec succès !');
-      navigate('/confirmation'); // ou une autre page
+      navigate('/redirect-stripe', { state: { orderId: order.id } });
     } catch (err) {
       console.error('Erreur commande :', err.message);
       alert('Une erreur est survenue lors de la commande.');
@@ -109,9 +117,9 @@ function Checkout() {
         <form onSubmit={handleSubmit} className="checkout-form">
           <fieldset>
             <legend>Identité</legend>
-            <p>Prénom : {user?.firstname}</p>
-            <p>Nom : {user?.lastname}</p>
-            <p>Email : {user?.email}</p>
+            <p>Prénom : {identity.firstname}</p>
+            <p>Nom : {identity.lastname}</p>
+            <p>Email : {identity.email}</p>
           </fieldset>
 
           <fieldset>
@@ -135,11 +143,11 @@ function Checkout() {
           </fieldset>
 
           <label>
-            <input type="checkbox" name="accepted" checked={formData.accepted} onChange={handleChange} />
-            J’accepte les <a href="/conditions">conditions générales</a>
+            <input type="checkbox" name="terms-of-sale" checked={formData.accepted} onChange={handleChange} />
+            J’accepte les <a href="/conditions">conditions générales de vente.</a>
           </label>
 
-          <button type="submit">Valider la commande</button>
+          <button>Valider la commande</button>
         </form>
       </main>
       <Footer />

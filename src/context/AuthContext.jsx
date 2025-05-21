@@ -9,6 +9,7 @@ export function useAuth() {
 
 export const AuthProvider = ({ children }) => {
   const [authToken, setAuthToken] = useState(null); // Initialisation correcte du token
+  const [loading, setLoading] = useState(true); // ➕ Ajout
 
   // Récupérer le token depuis les cookies au premier rendu
   useEffect(() => {
@@ -37,9 +38,13 @@ export const AuthProvider = ({ children }) => {
         console.error("Erreur lors de la vérification du token :", err);
         Cookies.remove('authToken');
         setAuthToken(null);
+        })
+      .finally(() => {
+        setLoading(false); // ✅ toujours terminer ici !
       });
   } else {
     setAuthToken(null);
+    setLoading(false); // ➕ Fin du chargement
   }
 }, []);
     
@@ -119,7 +124,7 @@ export const AuthProvider = ({ children }) => {
   const isAuthenticated = !!authToken;
 
   return (
-    <AuthContext.Provider value={{ authToken, login, logout, isAuthenticated }}>
+    <AuthContext.Provider value={{ authToken, login, logout, isAuthenticated, loading }}>
       {children}
     </AuthContext.Provider>
   );
