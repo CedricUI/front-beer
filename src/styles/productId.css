@@ -1,13 +1,14 @@
 .product-item-container{
-  max-width: 1200px;
   width: 100%;
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: column;
   justify-content: center;
+  align-items: center;
   gap: 20px;
   padding: 20px;
 }
 .product-item-image{
+  max-width: 1200px;
   width: 100%;
   display: flex;
   flex-wrap: wrap;

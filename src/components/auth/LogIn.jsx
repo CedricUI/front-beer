@@ -18,8 +18,8 @@ function LogIn() {
           await login(email, password);
 
           // // Remise à zéro des champs
-          // setEmail('');
-          // setPassword('');
+          setEmail('');
+          setPassword('');
 
           // Redirection après connexion réussie
             navigate(-1);
