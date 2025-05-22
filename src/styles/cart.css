@@ -31,3 +31,21 @@ figcaption {
 .cart-contains {
     display: none;
 }
+
+.title-order {
+    font-size: 1.2rem;
+    margin-bottom: .4rem;
+}
+
+.order-item,
+.totals,
+.title-order {
+    text-align: left;
+    list-style-type: none;
+}
+
+.order-container {
+    border: 2px solid grey;
+    border-radius: 1rem;
+    margin-bottom: 1rem;
+}
