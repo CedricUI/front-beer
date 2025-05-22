@@ -59,7 +59,7 @@ function UserOrders() {
 
   const statusFr = {
     pending: 'Validée, en attente de paiement',
-    paid: 'Payée',
+    completed: 'Payée',
     delivered: 'Expédiée',
     canceled: 'Annulée',    
   };
@@ -72,25 +72,25 @@ function UserOrders() {
     <div className="show-cart-container">
       <h1>Mes commandes</h1>
       {orders.map(order => (
-        <div key={order.id} className="cart-container">
+        <div key={order.id} className="order-container">
           <ul>
-            <li><strong>Commande n° {new Date(order.created_at).toISOString().slice(0, 10).replace(/-/g, '')}-{order.id}</strong> - Statut : {statusFr[order.status] || order.status}</li>
+            <li className="title-order"><strong>Commande n° {new Date(order.created_at).toISOString().slice(0, 10).replace(/-/g, '')}-{order.id}</strong> - Statut : {statusFr[order.status] || order.status}</li>
             {order.items.map(item => (
-              <li key={item.id} className="cart-item">
+              <li key={item.id} className="order-item">
                 {item.product_variant?.product?.name || 'Produit inconnu'} - Quantité : {item.quantity} - 
                 Montant : {(item.price_with_tax / 100).toFixed(2)} €
               </li>
             ))}
-            <li><strong>Total HT : {(order.total_price_without_tax / 100).toFixed(2)} €</strong></li>
-            <li><strong>Taxes : {(order.tax_amount / 100).toFixed(2)} €</strong></li>
-            <li><strong>Total TTC : {(order.total_price_with_tax / 100).toFixed(2)} €</strong></li>
+            <li className="totals"><strong>Total HT : {(order.total_price_without_tax / 100).toFixed(2)} €</strong></li>
+            <li className="totals"><strong>Taxes : {(order.tax_amount / 100).toFixed(2)} €</strong></li>
+            <li className="totals"><strong>Total TTC : {(order.total_price_with_tax / 100).toFixed(2)} €</strong></li>
           </ul>
 
           <ul>
-            <li><strong>Adresse :</strong> {order.address?.address}</li>
-            <li><strong>Code postal :</strong> {order.address?.zipcode}</li>
-            <li><strong>Ville :</strong> {order.address?.city}</li>
-            <li><strong>Téléphone :</strong> {order.address?.phone || 'Non communiqué'}</li>
+            <li className="totals"><strong>Adresse :</strong> {order.address?.address}</li>
+            <li className="totals"><strong>Code postal :</strong> {order.address?.zipcode}</li>
+            <li className="totals"><strong>Ville :</strong> {order.address?.city}</li>
+            <li className="totals"><strong>Téléphone :</strong> {order.address?.phone || 'Non communiqué'}</li>
           </ul>
 
           {order.status === 'pending' && (
