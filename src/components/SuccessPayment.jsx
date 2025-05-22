@@ -1,4 +1,4 @@
-import { useLocation } from 'react-router-dom';
+import { useLocation, Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { useAuth } from '../context/AuthContext'; // adapte le chemin
 import '../styles/checkout.css';
@@ -25,14 +25,16 @@ function SuccessPayment() {
           }
         });
 
-        if (!res.ok) throw new Error('Erreur lors de la confirmation du paiement');
-
         const data = await res.json();
+
+        if (!res.ok) throw new Error(data.message || 'Erreur inconnue'); /** Erreur lors de la confirmation du paiement */
+
+        
         setOrder(data.order);
         setMessage(data.message);
 
       } catch (err) {
-        setMessage('Une erreur est survenue lors de la validation du paiement.');
+        setMessage(err.message || 'Une erreur est survenue lors de la validation du paiement.');
       }
     };
 
@@ -40,11 +42,14 @@ function SuccessPayment() {
   }, [authToken, orderId]);
 
   return (
-    <div className="checkout">
-      <h1>✅ Paiement réussi</h1>
-      <p>{message}</p>
-      {order && <p>Commande #{order.id} confirmée !</p>}
-    </div>
+    <>
+      <div className="checkout">
+        <h1>✅ Paiement réussi</h1>
+        <p>{message}</p>
+        {order && <p>Commande #{order.id} confirmée !</p>}
+      </div>
+      <Link to="/mes-commandes" className="btn">Voir mes commandes</Link>
+    </>
   );
 }
 
