@@ -2,6 +2,8 @@ import { useLocation, Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { useAuth } from '../context/AuthContext'; // adapte le chemin
 import '../styles/checkout.css';
+import Header from './header';
+import Footer from './Footer';
 
 function SuccessPayment() {
   const { authToken } = useAuth();
@@ -43,12 +45,14 @@ function SuccessPayment() {
 
   return (
     <>
+      <Header />
       <div className="checkout">
         <h1>✅ Paiement réussi</h1>
         <p>{message}</p>
         {order && <p>Commande #{order.id} confirmée !</p>}
       </div>
       <Link to="/mes-commandes" className="btn">Voir mes commandes</Link>
+      <Footer />
     </>
   );
 }
