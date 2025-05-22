@@ -1,8 +1,18 @@
+.show-cart{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
 .show-cart-container{
     max-width: 1200px;
     width: 100%;
     padding: 20px;
     margin: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
     background-color: white;
 }
 .cart-container{

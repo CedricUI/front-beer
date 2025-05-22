@@ -15,6 +15,7 @@ import LogIn from './components/auth/LogIn.jsx';
 import { AuthProvider, useAuth } from './context/AuthContext.jsx';
 import Account from './components/Account.jsx';
 import Register from './components/auth/Register.jsx';
+import { CartProvider } from './context/CartContext';
 
 function ProtectedRoute({ children }) {
   const { authToken, loading } = useAuth();
@@ -27,22 +28,24 @@ function ProtectedRoute({ children }) {
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <AuthProvider>
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<App />} />
-          <Route path="/products" element={<Products />} />
-          <Route path="/products/:id" element={<ShowProduct />} />
-          <Route path="/panier" element={<ProtectedRoute><ShowCart /></ProtectedRoute>} />
-          <Route path="/commande" element={<ProtectedRoute><Checkout /></ProtectedRoute>} />
-          <Route path="/redirection-vers-le-paiement" element={<ProtectedRoute><RedirectToStripe /></ProtectedRoute>} />
-          <Route path="/mes-commandes" element={<ProtectedRoute><UserOrders /></ProtectedRoute>} />
-          <Route path="/paiement-reussi" element={<ProtectedRoute><SuccessPayment /></ProtectedRoute>} />
-          <Route path="/paiement-echoue" element={<ProtectedRoute><CancelPayment /></ProtectedRoute>} />
-          <Route path="/connexion" element={<LogIn />} />
-          <Route path="/déconnexion" element={<Account />} />
-          <Route path="/inscription" element={<Register />} />
-        </Routes>
-      </BrowserRouter>
+      <CartProvider>
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<App />} />
+            <Route path="/products" element={<Products />} />
+            <Route path="/products/:id" element={<ShowProduct />} />
+            <Route path="/panier" element={<ProtectedRoute><ShowCart /></ProtectedRoute>} />
+            <Route path="/commande" element={<ProtectedRoute><Checkout /></ProtectedRoute>} />
+            <Route path="/redirection-vers-le-paiement" element={<ProtectedRoute><RedirectToStripe /></ProtectedRoute>} />
+            <Route path="/mes-commandes" element={<ProtectedRoute><UserOrders /></ProtectedRoute>} />
+            <Route path="/paiement-reussi" element={<ProtectedRoute><SuccessPayment /></ProtectedRoute>} />
+            <Route path="/paiement-echoue" element={<ProtectedRoute><CancelPayment /></ProtectedRoute>} />
+            <Route path="/connexion" element={<LogIn />} />
+            <Route path="/déconnexion" element={<Account />} />
+            <Route path="/inscription" element={<Register />} />
+          </Routes>
+        </BrowserRouter>
+      </CartProvider>
     </AuthProvider>
   </StrictMode>,
 );

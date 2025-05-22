@@ -1,10 +1,9 @@
 import { useEffect, useState } from 'react';
-import './App.css';
 import Header from './components/header';
 import Home from './components/home';
 import PopUp from './components/PopUp';
 import Footer from './components/Footer';
-import ShowCart from './components/ShowCart'
+// import { CartProvider } from './context/CartContext';
 
 function App() {
   const [showPopup, setShowPopup] = useState(false);
@@ -12,7 +11,6 @@ function App() {
   useEffect(() => {
     const lastShown = localStorage.getItem('popupLastShown');
     const now = new Date();
-
     if (!lastShown || now - new Date(lastShown) > 24 * 60 * 60 * 1000) {
       setShowPopup(true);
     }
@@ -25,7 +23,6 @@ function App() {
 
   const handlePopupDecline = () => {
     window.location.href = 'https://youtu.be/RqIDV7NAm0Y?si=9d3j85x4cSdxpazl';
-    // Ne rien enregistrer dans localStorage
     setShowPopup(false);
   };
 
@@ -39,10 +36,9 @@ function App() {
       )}
       <Header />
       <Home />
-      {/* <ShowCart /> */}
       <Footer />
     </>
-  )
+  );
 }
 
 export default App;

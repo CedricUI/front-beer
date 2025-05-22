@@ -10,16 +10,19 @@ function Products() {
   const [showPopup, setShowPopup] = useState(false);
   const [beers, setBeers] = useState([]); // Liste complète
   const [filteredBeers, setFilteredBeers] = useState([]); // Liste filtrée
+  const [page, setPage] = useState(1); // Page actuelle
+  const [pagination, setPagination] = useState({}); // Informations de pagination
 
   // Récupérer les produits (beers) au chargement
   useEffect(() => {
-    fetch('http://127.0.0.1:8000/api/products')
-      .then(res => res.json())
-      .then(data => {
-        setBeers(data.products.data);
-        setFilteredBeers(data.products.data);
-      });
-  }, []);
+  fetch(`http://127.0.0.1:8000/api/products?page=${page}`)
+    .then(res => res.json())
+    .then(data => {
+      setBeers(data.products.data); // stocke la liste complète
+      setFilteredBeers(data.products.data); // stocke la liste filtrée
+      setPagination(data.products); // stocke tout l'objet de pagination
+    });
+}, [page]);
 
   // Vérifie si le popup doit être affiché
     useEffect(() => {
@@ -52,10 +55,25 @@ function Products() {
       <div className="products-container">
         <Header />
         <div className="products">
-          <h1>Products</h1>
-          <p>Voici quelques uns de nos produits.</p>
+          <h1 className="products-text-center">Products</h1>
+          <p className="products-text-center">Voici quelques uns de nos produits.</p>
           <Filter beers={beers} setFilteredBeers={setFilteredBeers} />
           <ProductCard beers={filteredBeers} />
+        </div>
+        <div className="pagination">
+          <button
+            disabled={!pagination.prev_page_url}
+            onClick={() => setPage(page - 1)}
+          >
+            Précédent
+          </button>
+          <span>Page {pagination.current_page} / {pagination.last_page}</span>
+          <button
+            disabled={!pagination.next_page_url}
+            onClick={() => setPage(page + 1)}
+          >
+            Suivant
+          </button>
         </div>
         <Footer />
       </div>

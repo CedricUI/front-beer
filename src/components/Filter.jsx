@@ -68,7 +68,7 @@ function Filter({ beers, setFilteredBeers }) {
 
     return (
         <div className="filter-container">
-        <h3>Filtrer les produits</h3>
+        <h3 className="products-text-center">Filtrer les produits</h3>
         <div className="filter">
             <input
                 type="text"

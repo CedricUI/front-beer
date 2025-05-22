@@ -1,7 +1,7 @@
 import '../styles/home.css';
 function Home() {
   return (
-    <>
+    <div className="home">
     <section className="home-section-titre">
       <h1 className="title1">Trink</h1>
       <p>Découvrer notre selection de bières du monde entier <br /> </p>
@@ -94,7 +94,7 @@ function Home() {
         </section>
     </div>
     
-  </>
+  </div>
   );
 }
 

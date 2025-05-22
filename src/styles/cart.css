@@ -1,3 +1,6 @@
+.cart-container{
+    position: relative;
+}
 .cart {
     width: fit-content;
     display: flex;
@@ -16,7 +19,55 @@
 .cart:active {
     filter: invert(100%);
 }
+.chip-cart {
+    width: 1.5rem;
+    height: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #e91414;
+    border-radius: 50%;
+    box-shadow: 0 0 5px rgba(0, 0, 0, .5);
+    color: #ffffff;
+    position: absolute;
+    z-index: 1;
+    bottom: 2rem;
+    right: 3rem;
+    animation: spinY 10s ease-in-out;
+    animation-fill-mode: forwards;
+}
+@keyframes spinY {
+    0% {
+        transform: rotateY(0deg) scaleZ(1);
+        width: 1.5rem;
+        height: 1.5rem;
+        color: #ffffff;
+    }
+    3% {
+        transform: rotateY(0deg) scaleZ(2);
+        width: .5rem;
+        height: .5rem;
+        color: #e91414;
+    }
+    6% {
+        transform: rotateY(720deg) scaleZ(0.5);
+    }
+    11% {
+        transform: rotateY(0deg) scaleZ(1);
+        width: 1.5rem;
+        height: 1.5rem;
+        color: #ffffff;
+    }
+    100% {
+        transform: rotateY(0deg) scaleZ(1);
+    }
+}
 
+.chip-cart {
+    animation: spinY 10s linear infinite;
+    backface-visibility: hidden;
+    perspective: 1000px;
+}
 .icon-cart {
     width: 24px;
     height: 24px;
