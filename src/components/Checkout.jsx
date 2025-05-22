@@ -32,21 +32,21 @@ function Checkout() {
     })
       .then(res => res.json())
       .then(data => {
-        const items = data.order.items || [];
+        const order = data.order || [];
+        const items = data.order?.items || [];
         const infosUser = data.user || [];
         setCart(items);
         setIdentity(infosUser);
-        console.log('Ceci est mon panier récupéré :', cart)
+        
+        const ht = Number(order.total_price_without_tax);
+        const tax = Number(order.tax_amount);
+        const ttc = Number(order.total_price_with_tax);
 
-        // const ht = items.reduce((acc, item) => acc + item.price_without_tax * item.quantity, 0);
-        // const tax = items.reduce((acc, item) => acc + item.tax_amount * item.quantity, 0);
-        // const ttc = items.reduce((acc, item) => acc + item.price_with_tax * item.quantity, 0);
-
-        // setTotals({
-        //   ht: (ht / 100).toFixed(2),
-        //   tax: (tax / 100).toFixed(2),
-        //   ttc: (ttc / 100).toFixed(2),
-        // });
+        setTotals({
+          ht: (ht / 100).toFixed(2),
+          tax: (tax / 100).toFixed(2),
+          ttc: (ttc / 100).toFixed(2),
+        });
       });
   }, [authToken]);
 
@@ -81,13 +81,18 @@ function Checkout() {
         }),
       });
 
-      console.log(formData);
-
       if (!res.ok) throw new Error('Erreur lors de la création de la commande');
 
       const data = await res.json();
       alert('Commande créée avec succès !');
-      navigate('/redirect-stripe', { state: { orderId: order.id } });
+
+      const orderId = data.order?.id;
+
+      if (!orderId) {
+        throw new Error('Aucun ID de commande reçu depuis le backend');
+      }
+
+      navigate('/redirection-vers-le-paiement', { state: { orderId } });
     } catch (err) {
       console.error('Erreur commande :', err.message);
       alert('Une erreur est survenue lors de la commande.');

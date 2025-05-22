@@ -1,6 +1,8 @@
 import { useNavigate } from "react-router-dom";
 
 function CancelPayment() {
+
+    
   return (
     <div className="checkout">
       <h1>❌ Paiement annulé</h1>
