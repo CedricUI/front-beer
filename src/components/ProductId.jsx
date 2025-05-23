@@ -168,7 +168,7 @@ function ProductId() {
                 <p>{productItem.product.description}</p>
                 {productItem.brands.map((brand) => (
                   <div key={brand.id}>
-                    <h3> <img src={brand.logo} alt={brand.name} /> {brand.name} </h3>
+                    <h3> {brand.name} </h3>
                     <p>{brand.description}</p>
                   </div>
                   
